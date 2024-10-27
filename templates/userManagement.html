@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">用户管理</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">用户统计</h5>
+                <p class="card-text">总用户数: {{ total_users }}</p>
+                <p class="card-text">活跃用户数: {{ active_users }}</p>
+                <p class="card-text">今日新增用户: {{ new_users_today }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">快速操作</h5>
+                <a href="{{ url_for('add_user') }}" class="btn btn-primary">添加新用户</a>
+                <a href="#" class="btn btn-secondary">导出用户数据</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">用户列表</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>注册日期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.registered_on }}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">编辑</a>
+                        <a href="#" class="btn btn-sm btn-danger">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

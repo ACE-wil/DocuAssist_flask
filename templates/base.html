@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}管理系统{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main-nav {
+            width: 80px;
+            min-width: 80px;
+            background-color: #f4f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            height: 90vh;
+            margin-top: 5vh;
+            margin-left: 15px;
+            margin-right: 15px;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            position: fixed;
+        }
+        .main-nav2 {
+            width: 80px;
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            height: 90vh;
+            margin-top: 5vh;
+            margin-left: 15px;
+            margin-right: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            opacity: 0;
+        }
+        .nav-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .logo, .nav-item {
+            margin-bottom: 20px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .active {
+            color: #007bff;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: #e9ecef; /* Bootstrap 的浅灰色 */
+            border-radius: 5px; /* 圆角 */
+            transition: background-color 0.3s; /* 平滑过渡效果 */
+            color: #007bff; /* Bootstrap 的主色调蓝色 */
+        }
+        body, html {
+            height: 100%;
+            width: 100%;
+        }
+        .container-fluid {
+            height: 100vh;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-top: 20px;
+            margin-right: 20px;
+            border-radius: 5px;
+
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-nav2"></div>
+        <nav class="main-nav">
+            <div class="nav-section">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" width="40" height="40" style="border-radius: 50%;">
+                </div>
+                <a href="{{ url_for('dashboard') }}" class="nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <span>📊</span>
+                    <span>主页</span>
+                </a>
+                <a href="{{ url_for('userManagement') }}" class="nav-item {% if request.endpoint == 'userManagement' %}active{% endif %}">
+                    <span>👥</span>
+                    <span>用户管理</span>
+                </a>
+                <a href="{{ url_for('titleManagement') }}" class="nav-item {% if request.endpoint == 'titleManagement' %}active{% endif %}">
+                    <span>📝</span>
+                    <span>题目管理</span>
+                </a>
+                <a href="{{ url_for('gameManagement') }}" class="nav-item {% if request.endpoint == 'gameManagement' %}active{% endif %}">
+                    <span>🎮</span>
+                    <span>游戏管理</span>
+                </a>
+                <a href="{{ url_for('report') }}" class="nav-item {% if request.endpoint == 'report' %}active{% endif %}">
+                    <span>📊</span>
+                    <span>报告分析</span>
+                </a>
+                <a href="{{ url_for('settings') }}" class="nav-item {% if request.endpoint == 'settings' %}active{% endif %}">
+                    <span>⚙️</span>
+                    <span>系统设置</span>
+                </a>
+                <a href="{{ url_for('help') }}" class="nav-item {% if request.endpoint == 'help' %}active{% endif %}">
+                    <span>❓</span>
+                    <span>帮助支持</span>
+                </a>
+                <a href="{{ url_for('about') }}" class="nav-item {% if request.endpoint == 'about' %}active{% endif %}">
+                    <span>ℹ️</span>
+                    <span>关于</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

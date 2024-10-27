@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}日志和报告{% endblock %}
+
+{% block content %}
+<h1>日志和报告</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>时间</th>
+            <th>事件</th>
+            <th>详情</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.event }}</td>
+            <td>{{ log.details }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

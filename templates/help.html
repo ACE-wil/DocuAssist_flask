@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}帮助与支持{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">帮助与支持</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-faq-list" data-bs-toggle="list" href="#list-faq" role="tab" aria-controls="list-faq">常见问题</a>
+                <a class="list-group-item list-group-item-action" id="list-guide-list" data-bs-toggle="list" href="#list-guide" role="tab" aria-controls="list-guide">使用指南</a>
+                <a class="list-group-item list-group-item-action" id="list-contact-list" data-bs-toggle="list" href="#list-contact" role="tab" aria-controls="list-contact">联系我们</a>
+                <a class="list-group-item list-group-item-action" id="list-feedback-list" data-bs-toggle="list" href="#list-feedback" role="tab" aria-controls="list-feedback">反馈建议</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-faq" role="tabpanel" aria-labelledby="list-faq-list">
+                    <h3>常见问题</h3>
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    如何重置密码？
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    点击登录页面的"忘记密码"链接，输入您的注册邮箱，然后按照邮件中的指示进行操作。
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 添加更多常见问题 -->
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="list-guide" role="tabpanel" aria-labelledby="list-guide-list">
+                    <h3>使用指南</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h5>1. 注册和登录</h5>
+                            <p>详细说明注册和登录的步骤...</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>2. 浏览和选择题目</h5>
+                            <p>解释如何浏览题目列表和选择合适的题目...</p>
+                        </li>
+                        <!-- 添加更多使用指南项目 -->
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="list-contact" role="tabpanel" aria-labelledby="list-contact-list">
+                    <h3>联系我们</h3>
+                    <p>如果您有任何问题或需要帮助，请通过以下方式联系我们：</p>
+                    <ul>
+                        <li>电子邮件：support@example.com</li>
+                        <li>客服热线：400-123-4567（工作日 9:00-18:00）</li>
+                        <li>在线客服：点击右下角的聊天图标</li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="list-feedback" role="tabpanel" aria-labelledby="list-feedback-list">
+                    <h3>反馈建议</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="feedbackType" class="form-label">反馈类型</label>
+                            <select class="form-select" id="feedbackType" required>
+                                <option value="">请选择</option>
+                                <option value="bug">问题报告</option>
+                                <option value="feature">功能建议</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="feedbackContent" class="form-label">反馈内容</label>
+                            <textarea class="form-control" id="feedbackContent" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交反馈</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

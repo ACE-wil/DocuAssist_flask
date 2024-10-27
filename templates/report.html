@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}报告分析{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">报告分析</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">用户活跃度</h5>
+                <canvas id="userActivityChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">题目完成情况</h5>
+                <p>总题目数：{{ total_questions }}</p>
+                <p>已完成题目：{{ completed_questions }}</p>
+                <p>完成率：{{ completion_rate|round(2) }}%</p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ completion_rate }}%;" aria-valuenow="{{ completion_rate }}" aria-valuemin="0" aria-valuemax="100">{{ completion_rate|round(2) }}%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">题目难度分布</h5>
+                <canvas id="difficultyChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">用户增长趋势</h5>
+                <canvas id="userGrowthChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">平均答题时间</h5>
+                <h2 class="text-center">{{ avg_answer_time|round(2) }} 分钟</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">最受欢迎的题目类型</h5>
+                <canvas id="popularQuestionTypesChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // 用户活跃度图表
+    var userActivityCtx = document.getElementById('userActivityChart').getContext('2d');
+    new Chart(userActivityCtx, {
+        type: 'line',
+        data: {
+            labels: {{ dates|tojson|safe }},
+            datasets: [{
+                label: '日活跃用户数',
+                data: {{ daily_active_users|tojson|safe }},
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // 题目难度分布图表
+    var difficultyCtx = document.getElementById('difficultyChart').getContext('2d');
+    new Chart(difficultyCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ difficulty_distribution.keys()|list|tojson|safe }},
+            datasets: [{
+                data: {{ difficulty_distribution.values()|list|tojson|safe }},
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    // 用户增长趋势图表
+    var userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+    new Chart(userGrowthCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ dates|tojson|safe }},
+            datasets: [{
+                label: '新增用户数',
+                data: {{ user_growth|tojson|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // 最受欢迎的题目类型图表
+    var popularQuestionTypesCtx = document.getElementById('popularQuestionTypesChart').getContext('2d');
+    new Chart(popularQuestionTypesCtx, {
+        type: 'horizontalBar',
+        data: {
+            labels: {{ popular_question_types|map(attribute=0)|list|tojson }},
+            datasets: [{
+                label: '题目数量',
+                data: {{ popular_question_types|map(attribute=1)|list|tojson }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

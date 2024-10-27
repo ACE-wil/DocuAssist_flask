@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}仪表板{% endblock %}
+
+{% block page_title %}仪表板{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">题目总数</h5>
+                <p class="card-text display-4">{{ question_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">用户总数</h5>
+                <p class="card-text display-4">{{ user_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">活跃用户</h5>
+                <p class="card-text display-4">{{ active_user_count }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">快捷操作</h5>
+                <a href="{{ url_for('add_question') }}" class="btn btn-primary me-2">添加题目</a>
+                <a href="{{ url_for('add_user') }}" class="btn btn-secondary">添加用户</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">最近活动</h5>
+                <ul class="list-group">
+                    {% for activity in recent_activities %}
+                    <li class="list-group-item">{{ activity }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

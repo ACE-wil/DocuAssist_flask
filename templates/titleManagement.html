@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}题目管理{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">题目管理</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">题目统计</h5>
+                <p class="card-text">总题目数: {{ total_questions }}</p>
+                <p class="card-text">简单题目: {{ easy_questions }}</p>
+                <p class="card-text">中等题目: {{ medium_questions }}</p>
+                <p class="card-text">困难题目: {{ hard_questions }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">快速操作</h5>
+                <a href="{{ url_for('add_question') }}" class="btn btn-primary">添加新题目</a>
+                <a href="#" class="btn btn-secondary">导入题目</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">题目列表</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>题目</th>
+                    <th>难度</th>
+                    <th>创建日期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.content[:50] }}...</td>
+                    <td>{{ question.difficulty }}</td>
+                    <td>{{ question.created_at }}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">编辑</a>
+                        <a href="#" class="btn btn-sm btn-danger">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

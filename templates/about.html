@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}关于我们{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="jumbotron bg-primary text-white text-center py-5">
+        <h1 class="display-4">关于我们</h1>
+        <p class="lead">致力于为编程学习者提供最佳的在线学习平台</p>
+    </div>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>我们的使命</h2>
+                <p>我们的使命是通过提供高质量的编程题目和实时反馈，帮助学习者提升编程技能，为未来的技术发展做好准备。</p>
+            </div>
+            <div class="col-md-6">
+                <h2>我们的愿景</h2>
+                <p>成为全球领先的在线编程学习平台，为每一位学习者提供个性化的学习体验和成长机会。</p>
+            </div>
+        </div>
+        
+        <hr class="my-5">
+        
+        <h2 class="text-center mb-4">我们的团队</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/team-member-1.jpg') }}" class="card-img-top" alt="团队成员1">
+                    <div class="card-body">
+                        <h5 class="card-title">张三</h5>
+                        <p class="card-text">创始人 & CEO</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/team-member-2.jpg') }}" class="card-img-top" alt="团队成员2">
+                    <div class="card-body">
+                        <h5 class="card-title">李四</h5>
+                        <p class="card-text">CTO</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/team-member-3.jpg') }}" class="card-img-top" alt="团队成员3">
+                    <div class="card-body">
+                        <h5 class="card-title">王五</h5>
+                        <p class="card-text">首席教育官</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="my-5">
+        
+        <h2 class="text-center mb-4">我们的成就</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <h3 class="display-4">100万+</h3>
+                <p>注册用户</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="display-4">5000+</h3>
+                <p>编程题目</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="display-4">50+</h3>
+                <p>合作院校</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="display-4">98%</h3>
+                <p>用户满意度</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

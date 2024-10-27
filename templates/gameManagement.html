@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}游戏管理{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">游戏管理</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">游戏统计</h5>
+                <p class="card-text">总游戏数: {{ total_games }}</p>
+                <p class="card-text">活跃游戏: {{ active_games }}</p>
+                <p class="card-text">今日新增游戏: {{ new_games_today }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">快速操作</h5>
+                <a href="#" class="btn btn-primary">创建新游戏</a>
+                <a href="#" class="btn btn-secondary">游戏设置</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">游戏列表</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>游戏名称</th>
+                    <th>创建日期</th>
+                    <th>玩家数量</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>{{ game.id }}</td>
+                    <td>{{ game.name }}</td>
+                    <td>{{ game.created_at }}</td>
+                    <td>{{ game.player_count }}</td>
+                    <td>{{ game.status }}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">编辑</a>
+                        <a href="#" class="btn btn-sm btn-danger">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
