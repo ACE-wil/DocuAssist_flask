@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -10,11 +10,16 @@ from datetime import timedelta, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from urllib.parse import urlparse
 import random
+import os
+from werkzeug.utils import secure_filename
+from flask_cors import CORS
+
+# 在创建Flask应用后立即启用CORS
 
 db = SQLAlchemy()
 
 app = Flask(__name__)
-
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '7a9e6b5fc3d24a8f1e0b2c4d6a8f0e1c'  # 使用我们之前生成的密钥
@@ -310,5 +315,43 @@ class SettingsForm(FlaskForm):
     maintenance_mode = BooleanField('维护模式')
     submit = SubmitField('保存设置')
 
+@app.route('/api/create-app', methods=['POST'])
+@login_required
+def create_app():
+    app_name = request.form.get('app_name')
+    app_description = request.form.get('app_description')
+    creator_name = request.form.get('creator_name')
+    
+    app_avatar = request.files.get('app_avatar')
+    doc_file = request.files.get('doc_file')
+    
+    # 保存文件
+    app_avatar_path = None
+    if app_avatar:
+        filename = secure_filename(app_avatar.filename)
+        app_avatar_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        app_avatar.save(app_avatar_path)
+    
+    doc_file_path = None
+    if doc_file:
+        filename = secure_filename(doc_file.filename)
+        doc_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        doc_file.save(doc_file_path)
+    
+    # 创建新应用
+    new_app = Application(
+        app_name=app_name,
+        app_description=app_description,
+        creator_name=creator_name,
+        app_avatar_path=app_avatar_path,
+        doc_file_path=doc_file_path
+    )
+    
+    db.session.add(new_app)
+    db.session.commit()
+    
+    return jsonify({'message': 'Application created successfully'}), 201
+
 if __name__ == '__main__':
     app.run(debug=True)
+
