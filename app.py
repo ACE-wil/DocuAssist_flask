@@ -14,10 +14,23 @@ import os
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import sqlite3
+from pathlib import Path
 
 # 在创建Flask应用后立即启用CORS
 
 db = SQLAlchemy()
+
+# 获取项目根目录
+PROJECT_ROOT = Path(__file__).parent.absolute()
+
+# 配置各种路径
+INSTANCE_DIR = PROJECT_ROOT / 'instance'
+UPLOAD_DIR = PROJECT_ROOT / 'uploads'
+DB_PATH = INSTANCE_DIR / 'site.db'
+
+# 创建必要的目录
+INSTANCE_DIR.mkdir(exist_ok=True)
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 设置为16MB
@@ -34,16 +47,8 @@ CORS(app, resources={
     }
 })
 
-# 使用绝对路径配置数据库
-DB_PATH = r'D:\2024秋招-大四上\毕业论文\DocuAssist_flask\instance\site.db'
-UPLOAD_FOLDER = r'D:\2024秋招-大四上\毕业论文\DocuAssist_flask\uploads'
-
-# 确保目录存在
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = str(UPLOAD_DIR)  # Flask需要字符串路径
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 增加到 50MB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '7a9e6b5fc3d24a8f1e0b2c4d6a8f0e1c'  # 使用我们之前生成的密钥
@@ -304,7 +309,7 @@ with app.app_context():
     try:
         print(f"\n当前工作目录: {os.getcwd()}")
         print(f"数据库文件路径: {DB_PATH}")
-        print(f"上传文件夹路径: {UPLOAD_FOLDER}\n")
+        print(f"上传文件夹路径: {UPLOAD_DIR}\n")
         
         db.create_all()
         
