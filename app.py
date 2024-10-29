@@ -13,14 +13,38 @@ import random
 import os
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+import sqlite3
 
 # 在创建Flask应用后立即启用CORS
 
 db = SQLAlchemy()
 
 app = Flask(__name__)
-CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 设置为16MB
+
+# 配置 CORS
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:3000"],  # React 开发服务器地址
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Accept", "X-Requested-With"],
+        "supports_credentials": True,
+        "expose_headers": ["Content-Disposition"],
+        "max_age": 3600
+    }
+})
+
+# 使用绝对路径配置数据库
+DB_PATH = r'D:\2024秋招-大四上\毕业论文\DocuAssist_flask\instance\site.db'
+UPLOAD_FOLDER = r'D:\2024秋招-大四上\毕业论文\DocuAssist_flask\uploads'
+
+# 确保目录存在
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 增加到 50MB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '7a9e6b5fc3d24a8f1e0b2c4d6a8f0e1c'  # 使用我们之前生成的密钥
 db.init_app(app)
@@ -277,18 +301,26 @@ def home():
 
 # 创建数据库表
 with app.app_context():
-    db.create_all()
-    
-    # 检查是否已存在默认用户
-    default_user = User.query.filter_by(username='admin').first()
-    if not default_user:
-        # 创建默认用户
-        default_user = User(username='admin', password=generate_password_hash('password'))
-        db.session.add(default_user)
-        db.session.commit()
-        print("默认用户已创建")
-    else:
-        print("默认用户已存在")
+    try:
+        print(f"\n当前工作目录: {os.getcwd()}")
+        print(f"数据库文件路径: {DB_PATH}")
+        print(f"上传文件夹路径: {UPLOAD_FOLDER}\n")
+        
+        db.create_all()
+        
+        # 检查是否已存在默认用户
+        default_user = User.query.filter_by(username='admin').first()
+        if not default_user:
+            default_user = User(username='admin', password=generate_password_hash('password'))
+            db.session.add(default_user)
+            db.session.commit()
+            print("默认用户已创建")
+        else:
+            print("默认用户已存在")
+    except Exception as e:
+        print(f"数据库初始化错误: {str(e)}")
+        db.session.rollback()
+        raise
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -315,43 +347,88 @@ class SettingsForm(FlaskForm):
     maintenance_mode = BooleanField('维护模式')
     submit = SubmitField('保存设置')
 
+# 添加 Application 模型定义
+class Applications(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    app_name = db.Column(db.String(100), nullable=False)
+    app_description = db.Column(db.Text)
+    creator_name = db.Column(db.String(100))
+    app_avatar_path = db.Column(db.String(255))
+    doc_file_path = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 @app.route('/api/create-app', methods=['POST'])
-@login_required
 def create_app():
-    app_name = request.form.get('app_name')
-    app_description = request.form.get('app_description')
-    creator_name = request.form.get('creator_name')
-    
-    app_avatar = request.files.get('app_avatar')
-    doc_file = request.files.get('doc_file')
-    
-    # 保存文件
-    app_avatar_path = None
-    if app_avatar:
-        filename = secure_filename(app_avatar.filename)
-        app_avatar_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        app_avatar.save(app_avatar_path)
-    
-    doc_file_path = None
-    if doc_file:
-        filename = secure_filename(doc_file.filename)
-        doc_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        doc_file.save(doc_file_path)
-    
-    # 创建新应用
-    new_app = Application(
-        app_name=app_name,
-        app_description=app_description,
-        creator_name=creator_name,
-        app_avatar_path=app_avatar_path,
-        doc_file_path=doc_file_path
-    )
-    
-    db.session.add(new_app)
-    db.session.commit()
-    
-    return jsonify({'message': 'Application created successfully'}), 201
+    try:
+        # 打印数据库路径
+        db_path = os.path.abspath(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', ''))
+        print(f"\n数据库文件路径: {db_path}")
+        
+        # 打印上传文件夹路径
+        upload_folder = os.path.abspath(app.config['UPLOAD_FOLDER'])
+        print(f"上传文件夹路径: {upload_folder}\n")
+
+        # 确保上传目录存在
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+
+        app_name = request.form.get('app_name')
+        app_description = request.form.get('app_description')
+        creator_name = request.form.get('creator_name')
+        
+        # 处理头像文件
+        app_avatar_path = None
+        if 'app_avatar' in request.files:
+            avatar_file = request.files['app_avatar']
+            if avatar_file and avatar_file.filename:
+                filename = secure_filename(f"{app_name}_avatar_{avatar_file.filename}")
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                avatar_file.save(filepath)
+                app_avatar_path = filepath
+                print(f"头像文件已保存到: {os.path.abspath(filepath)}")
+
+        # 处理文档文件
+        doc_file_path = None
+        if 'doc_file' in request.files:
+            doc_file = request.files['doc_file']
+            if doc_file and doc_file.filename:
+                filename = secure_filename(f"{app_name}_doc_{doc_file.filename}")
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                doc_file.save(filepath)
+                doc_file_path = filepath
+                print(f"文档文件已保存到: {os.path.abspath(filepath)}")
+
+        # 使用 SQLAlchemy ORM
+        new_app = Applications(
+            app_name=app_name,
+            app_description=app_description,
+            creator_name=creator_name,
+            app_avatar_path=app_avatar_path,
+            doc_file_path=doc_file_path
+        )
+        
+        db.session.add(new_app)
+        db.session.commit()
+        print(f"数据已保存到数据库表: applications")
+
+        response_data = {
+            'message': '应用创建成功',
+            'received_data': {
+                'app_name': app_name,
+                'app_description': app_description,
+                'creator_name': creator_name,
+                'app_avatar': app_avatar_path,
+                'doc_file': doc_file_path
+            }
+        }
+        
+        return jsonify(response_data), 201
+        
+    except Exception as e:
+        print(f"错误: {str(e)}")
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
