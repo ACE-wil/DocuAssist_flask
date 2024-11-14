@@ -1,0 +1,151 @@
+[
+  {
+    "npcName": "艾尔文",
+    "npcDialog": "我踏入了智慧之谷，这里的学术氛围让我着迷。我决定留在这里学习。",
+    "backgroundVideo": "/videos/valley-arrival.mp4",
+    "options": [
+      { "text": "我想要寻找学院的位置，开始我的学习之旅。", "nextScene": 1 },
+      { "text": "我想要先四处逛逛，了解更多关于这个山谷的信息。", "nextScene": 2 }
+    ]
+  },
+  {
+    "npcName": "艾莉娅",
+    "npcDialog": "你好，艾尔文。我是艾莉娅，这里的学者。我注意到你对学术很感兴趣。",
+    "npcAvatar": "/avatars/elya.png",
+    "backgroundVideo": "/videos/academy-meeting.mp4",
+    "options": [
+      { "text": "艾莉娅，我想了解学院的课程，看看有哪些我可以学习的。", "nextScene": 3 },
+      { "text": "我更想听听你对这个山谷的看法，你对这里了解多少？", "nextScene": 4 }
+    ]
+  },
+  {
+    "npcName": "艾尔文",
+    "npcDialog": "艾莉娅，我在森林里发现了一片神秘的区域，这里似乎有一种特殊的能量。",
+    "npcAvatar": "/avatars/eln.png",
+    "backgroundVideo": "/videos/mysterious-region.mp4",
+    "options": [
+      { "text": "我们应该揭开这片区域的秘密，看看这特殊能量是什么。", "nextScene": 5 },
+      { "text": "我担心这会带来危险，我们应该小心行事，不要轻易接近。", "nextScene": 6 }
+    ]
+  },
+  {
+    "npcName": "老者",
+    "npcDialog": "你好，旅行者。我是这片土地的守护者。这片区域的能量被称为“绝对力量”。它可以加速人的成长，但过度使用会导致精神上的迷失。",
+    "npcAvatar": "/avatars/elder.png",
+    "backgroundVideo": "/videos/elder-advice.mp4",
+    "options": [
+      { "text": "守护者，我想了解更多关于这种力量的信息。", "nextScene": 7 },
+      { "text": "我听说这片力量可能很危险，我们应该如何避免滥用它？", "nextScene": 8 }
+    ]
+  },
+  {
+    "npcName": "艾尔文",
+    "npcDialog": "艾莉娅，我们回到学院，向老师们请教如何正确地运用这种力量。",
+    "npcAvatar": "/avatars/eln.png",
+    "backgroundVideo": "/videos/return-to-academy.mp4",
+    "options": [
+      { "text": "我们应该专注于修炼，学习控制这种力量。", "nextScene": 9 },
+      { "text": "我们首先要了解这种力量的本质（abstract），这样才能正确使用它。", "nextScene": 10 }
+    ]
+  },
+  {
+    "npcName": "法师",
+    "npcDialog": "要掌握这种力量，首先需要了解它的本质。你们必须开始艰苦的修炼。",
+    "npcAvatar": "/avatars/wizard.png",
+    "backgroundVideo": "/videos/magic-lessons.mp4",
+    "options": [
+      { "text": "接受法师的指导，开始修炼这种力量。", "nextScene": 11 },
+      { "text": "我想要自己探索，看看能否找到控制这种力量的方法。", "nextScene": 12 }
+    ]
+  },
+  {
+    "npcName": "失踪的学者",
+    "npcDialog": "我失去了记忆，我的身体也变得虚弱。你们要帮助我找回记忆。",
+    "npcAvatar": "/avatars/scholar-missing.png",
+    "backgroundVideo": "/videos/scholar-need-help.mp4",
+    "options": [
+      { "text": "我想要帮助你找回记忆，我们可以一起调查你的失踪原因。", "nextScene": 13 },
+      { "text": "我们应该先保护你，防止你被进一步伤害。", "nextScene": 14 }
+    ]
+  },
+  {
+    "npcName": "艾莉娅",
+    "npcDialog": "我们开始调查学者的失踪原因，发现了一个阴谋。有人想要滥用这种绝对力量。",
+    "npcAvatar": "/avatars/elya.png",
+    "backgroundVideo": "/videos/conspiracy-discovery.mp4",
+    "options": [
+      { "text": "我们应该阻止他们，保护山谷的和平。", "nextScene": 15 },
+      { "text": "我们应该先收集更多信息，制定一个详细的计划。", "nextScene": 16 }
+    ]
+  },
+  {
+    "npcName": "艾尔文",
+    "npcDialog": "我决定利用自己的能力（ability）和学院里的知识（academic），制定一个详细的计划来阻止那些想要滥用绝对力量的人。",
+    "npcAvatar": "/avatars/eln.png",
+    "backgroundVideo": "/videos/plan-to-stop-them.mp4",
+    "options": [
+      { "text": "我们需要找到证据，揭露这个阴谋的真相。", "nextScene": 17 },
+      { "text": "我们应该组织一支队伍，准备与那些滥用力量的人战斗。", "nextScene": 18 }
+    ]
+  },
+  {
+    "npcName": "艾莉娅",
+    "npcDialog": "在战斗中，我们必须保持冷静和专注。我们的目标是保护山谷，而不是仅仅击败敌人。",
+    "npcAvatar": "/avatars/elya.png",
+    "backgroundVideo": "/videos/battle-preparation.mp4",
+    "options": [
+      { "text": "艾莉娅，我会全力以赴，保护我们的家园。", "nextScene": 19 },
+      { "text": "我们应该在战斗中尽量减少伤亡，避免不必要的冲突。", "nextScene": 20 }
+    ]
+  },
+  {
+    "npcName": "艾尔文",
+    "npcDialog": "战斗开始了，我们面对着强大的敌人。但我相信，只要我们团结一心，就没有什么是不可能的。",
+    "npcAvatar": "/avatars/eln.png",
+    "backgroundVideo": "/videos/battle-escalation.mp4",
+    "options": [
+      { "text": "艾莉娅，我们要集中力量，找到敌人的弱点。", "nextScene": 21 },
+      { "text": "我感觉到一种强大的能量波动，我们应该利用它来帮助我们。", "nextScene": 22 }
+    ]
+  },
+  {
+    "npcName": "艾莉娅",
+    "npcDialog": "我们成功地击败了那些想要滥用力量的人。他们再也不能威胁我们的家园了。",
+    "npcAvatar": "/avatars/elya.png",
+    "backgroundVideo": "/videos/battle-victory.mp4",
+    "options": [
+      { "text": "艾莉娅，我们做到了！我们的勇气和智慧保护了智慧之谷的和平。", "nextScene": 23 },
+      { "text": "现在，我们需要帮助失踪的学者恢复记忆，让他回到我们中间。", "nextScene": 24 }
+    ]
+  },
+  {
+    "npcName": "失踪的学者",
+    "npcDialog": "谢谢你们救了我，我感激不尽。现在，我终于记起了一切。",
+    "npcAvatar": "/avatars/scholar-missing.png",
+    "backgroundVideo": "/videos/scholar-remembering.mp4",
+    "options": [
+      { "text": "学者，你的记忆恢复了，我们可以一起重建你的生活。", "nextScene": 25 },
+      { "text": "我们首先要确保你的身体康复，然后我们可以一起讨论未来的计划。", "nextScene": 26 }
+    ]
+  },
+  {
+    "npcName": "艾莉娅",
+    "npcDialog": "艾尔文，我们的故事已经传遍了整个山谷。我们成为了人们心中的英雄。",
+    "npcAvatar": "/avatars/elya.png",
+    "backgroundVideo": "/videos/fame-and-legends.mp4",
+    "options": [
+      { "text": "艾莉娅，我们的成就归功于我们的勇气和团结。", "nextScene": 27 },
+      { "text": "我们应该利用我们的名声，帮助更多的人，传播智慧之谷的和平与繁荣。", "nextScene": 28 }
+    ]
+  },
+  {
+    "npcName": "向导",
+    "npcDialog": "恭喜你完成了所有探索！你的勇气和智慧让智慧之谷更加繁荣。现在，你可以选择重新开始冒险，或者结束这次旅程。",
+    "npcAvatar": "/avatars/guide.png",
+    "backgroundVideo": "/videos/ending-scene.mp4",
+    "options": [
+      { "text": "重新开始冒险，探索更多的未知世界。", "nextScene": 0 },
+      { "text": "结束游戏，享受这段美好的回忆。", "nextScene": 0 }
+    ]
+  }
+]
