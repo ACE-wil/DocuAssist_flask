@@ -1,0 +1,122 @@
+"让我们悄悄地追踪声音的来源。",
+          "nextScene": 17
+        },
+        {
+          "text": "这可能是一个陷阱，我们应该保持距离。",
+          "nextScene": 18
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "我们找到了一个隐藏在森林深处的神秘场所。这里有一个巨大的瀑布，水流从高处倾泻而下。",
+      "npcAvatar": "/avatars/minister.png",
+      "backgroundVideo": "/videos/secret-place-discovery.mp4",
+      "options": [
+        {
+          "text": "这个瀑布的声音真的很震撼。",
+          "nextScene": 19
+        },
+        {
+          "text": "我们应该小心，这里可能隐藏着危险。",
+          "nextScene": 20
+        }
+      ]
+    },
+    {
+      "npcName": "时间的守护者",
+      "npcDialog": "我是时间的守护者，我在等待一个重要的时刻。只有当那个时刻到来时，我才能完成我的使命。",
+      "npcAvatar": "/avatars/time-guardian.png",
+      "backgroundVideo": "/videos/time-guardian-dialogue.mp4",
+      "options": [
+        {
+          "text": "我们很荣幸能遇见您。",
+          "nextScene": 21
+        },
+        {
+          "text": "请问，这个时刻是什么时候？",
+          "nextScene": 22
+        }
+      ]
+    },
+    {
+      "npcName": "助手",
+      "npcDialog": "我们告别了时间的守护者，继续我们的旅程。我们经历了许多奇妙的事情。",
+      "npcAvatar": "/avatars/assistant.png",
+      "backgroundVideo": "/videos/wonderful-experiences.mp4",
+      "options": [
+        {
+          "text": "这些经历一定会让庆典更加精彩。",
+          "nextScene": 23
+        },
+        {
+          "text": "我们一定要将这些经历记录下来。",
+          "nextScene": 24
+        }
+      ]
+    },
+    {
+      "npcName": "艺术家",
+      "npcDialog": "我在这里，是为了记录下这个世界的美好。每一个细节，每一个瞬间，都是我创作的灵感来源。",
+      "npcAvatar": "/avatars/artist.png",
+      "backgroundVideo": "/videos/artist-dialogue.mp4",
+      "options": [
+        {
+          "text": "您的作品一定很美，我愿意欣赏。",
+          "nextScene": 25
+        },
+        {
+          "text": "我也想尝试绘画，您能教我吗？",
+          "nextScene": 26
+        }
+      ]
+    },
+    {
+      "npcName": "农夫",
+      "npcDialog": "因为我相信，即使在最糟糕的时刻，也会有美好的事物发生。",
+      "npcAvatar": "/avatars/farmer.png",
+      "backgroundVideo": "/videos/farmer-dialogue.mp4",
+      "options": [
+        {
+          "text": "您的乐观精神很令人敬佩。",
+          "nextScene": 27
+        },
+        {
+          "text": "我希望能像您一样，在任何情况下都能保持乐观。",
+          "nextScene": 28
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "恭喜你们完成了任务，庆典一定会非常成功。",
+      "npcAvatar": "/avatars/king.png",
+      "backgroundVideo": "/videos/king-celebration-announcement.mp4",
+      "options": [
+        {
+          "text": "陛下，这是我从国外带回来的礼物。",
+          "nextScene": 29
+        },
+        {
+          "text": "陛下，这是我在森林中找到的神奇草药。",
+          "nextScene": 30
+        }
+      ]
+    },
+    {
+      "npcName": "向导",
+      "npcDialog": "恭喜你完成了所有探索！现在，你准备好开始新的冒险了吗？",
+      "npcAvatar": "/avatars/guide.png",
+      "backgroundVideo": "/videos/ending-scene.mp4",
+      "options": [
+        {
+          "text": "是的，我准备好了！",
+          "nextScene": 0
+        },
+        {
+          "text": "我想休息一下，再决定。",
+          "nextScene": 0
+        }
+      ]
+    }
+  ]

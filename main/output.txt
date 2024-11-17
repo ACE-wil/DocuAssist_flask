@@ -1,151 +1,257 @@
 [
-  {
-    "npcName": "艾尔文",
-    "npcDialog": "我踏入了智慧之谷，这里的学术氛围让我着迷。我决定留在这里学习。",
-    "backgroundVideo": "/videos/valley-arrival.mp4",
-    "options": [
-      { "text": "我想要寻找学院的位置，开始我的学习之旅。", "nextScene": 1 },
-      { "text": "我想要先四处逛逛，了解更多关于这个山谷的信息。", "nextScene": 2 }
-    ]
-  },
-  {
-    "npcName": "艾莉娅",
-    "npcDialog": "你好，艾尔文。我是艾莉娅，这里的学者。我注意到你对学术很感兴趣。",
-    "npcAvatar": "/avatars/elya.png",
-    "backgroundVideo": "/videos/academy-meeting.mp4",
-    "options": [
-      { "text": "艾莉娅，我想了解学院的课程，看看有哪些我可以学习的。", "nextScene": 3 },
-      { "text": "我更想听听你对这个山谷的看法，你对这里了解多少？", "nextScene": 4 }
-    ]
-  },
-  {
-    "npcName": "艾尔文",
-    "npcDialog": "艾莉娅，我在森林里发现了一片神秘的区域，这里似乎有一种特殊的能量。",
-    "npcAvatar": "/avatars/eln.png",
-    "backgroundVideo": "/videos/mysterious-region.mp4",
-    "options": [
-      { "text": "我们应该揭开这片区域的秘密，看看这特殊能量是什么。", "nextScene": 5 },
-      { "text": "我担心这会带来危险，我们应该小心行事，不要轻易接近。", "nextScene": 6 }
-    ]
-  },
-  {
-    "npcName": "老者",
-    "npcDialog": "你好，旅行者。我是这片土地的守护者。这片区域的能量被称为“绝对力量”。它可以加速人的成长，但过度使用会导致精神上的迷失。",
-    "npcAvatar": "/avatars/elder.png",
-    "backgroundVideo": "/videos/elder-advice.mp4",
-    "options": [
-      { "text": "守护者，我想了解更多关于这种力量的信息。", "nextScene": 7 },
-      { "text": "我听说这片力量可能很危险，我们应该如何避免滥用它？", "nextScene": 8 }
-    ]
-  },
-  {
-    "npcName": "艾尔文",
-    "npcDialog": "艾莉娅，我们回到学院，向老师们请教如何正确地运用这种力量。",
-    "npcAvatar": "/avatars/eln.png",
-    "backgroundVideo": "/videos/return-to-academy.mp4",
-    "options": [
-      { "text": "我们应该专注于修炼，学习控制这种力量。", "nextScene": 9 },
-      { "text": "我们首先要了解这种力量的本质（abstract），这样才能正确使用它。", "nextScene": 10 }
-    ]
-  },
-  {
-    "npcName": "法师",
-    "npcDialog": "要掌握这种力量，首先需要了解它的本质。你们必须开始艰苦的修炼。",
-    "npcAvatar": "/avatars/wizard.png",
-    "backgroundVideo": "/videos/magic-lessons.mp4",
-    "options": [
-      { "text": "接受法师的指导，开始修炼这种力量。", "nextScene": 11 },
-      { "text": "我想要自己探索，看看能否找到控制这种力量的方法。", "nextScene": 12 }
-    ]
-  },
-  {
-    "npcName": "失踪的学者",
-    "npcDialog": "我失去了记忆，我的身体也变得虚弱。你们要帮助我找回记忆。",
-    "npcAvatar": "/avatars/scholar-missing.png",
-    "backgroundVideo": "/videos/scholar-need-help.mp4",
-    "options": [
-      { "text": "我想要帮助你找回记忆，我们可以一起调查你的失踪原因。", "nextScene": 13 },
-      { "text": "我们应该先保护你，防止你被进一步伤害。", "nextScene": 14 }
-    ]
-  },
-  {
-    "npcName": "艾莉娅",
-    "npcDialog": "我们开始调查学者的失踪原因，发现了一个阴谋。有人想要滥用这种绝对力量。",
-    "npcAvatar": "/avatars/elya.png",
-    "backgroundVideo": "/videos/conspiracy-discovery.mp4",
-    "options": [
-      { "text": "我们应该阻止他们，保护山谷的和平。", "nextScene": 15 },
-      { "text": "我们应该先收集更多信息，制定一个详细的计划。", "nextScene": 16 }
-    ]
-  },
-  {
-    "npcName": "艾尔文",
-    "npcDialog": "我决定利用自己的能力（ability）和学院里的知识（academic），制定一个详细的计划来阻止那些想要滥用绝对力量的人。",
-    "npcAvatar": "/avatars/eln.png",
-    "backgroundVideo": "/videos/plan-to-stop-them.mp4",
-    "options": [
-      { "text": "我们需要找到证据，揭露这个阴谋的真相。", "nextScene": 17 },
-      { "text": "我们应该组织一支队伍，准备与那些滥用力量的人战斗。", "nextScene": 18 }
-    ]
-  },
-  {
-    "npcName": "艾莉娅",
-    "npcDialog": "在战斗中，我们必须保持冷静和专注。我们的目标是保护山谷，而不是仅仅击败敌人。",
-    "npcAvatar": "/avatars/elya.png",
-    "backgroundVideo": "/videos/battle-preparation.mp4",
-    "options": [
-      { "text": "艾莉娅，我会全力以赴，保护我们的家园。", "nextScene": 19 },
-      { "text": "我们应该在战斗中尽量减少伤亡，避免不必要的冲突。", "nextScene": 20 }
-    ]
-  },
-  {
-    "npcName": "艾尔文",
-    "npcDialog": "战斗开始了，我们面对着强大的敌人。但我相信，只要我们团结一心，就没有什么是不可能的。",
-    "npcAvatar": "/avatars/eln.png",
-    "backgroundVideo": "/videos/battle-escalation.mp4",
-    "options": [
-      { "text": "艾莉娅，我们要集中力量，找到敌人的弱点。", "nextScene": 21 },
-      { "text": "我感觉到一种强大的能量波动，我们应该利用它来帮助我们。", "nextScene": 22 }
-    ]
-  },
-  {
-    "npcName": "艾莉娅",
-    "npcDialog": "我们成功地击败了那些想要滥用力量的人。他们再也不能威胁我们的家园了。",
-    "npcAvatar": "/avatars/elya.png",
-    "backgroundVideo": "/videos/battle-victory.mp4",
-    "options": [
-      { "text": "艾莉娅，我们做到了！我们的勇气和智慧保护了智慧之谷的和平。", "nextScene": 23 },
-      { "text": "现在，我们需要帮助失踪的学者恢复记忆，让他回到我们中间。", "nextScene": 24 }
-    ]
-  },
-  {
-    "npcName": "失踪的学者",
-    "npcDialog": "谢谢你们救了我，我感激不尽。现在，我终于记起了一切。",
-    "npcAvatar": "/avatars/scholar-missing.png",
-    "backgroundVideo": "/videos/scholar-remembering.mp4",
-    "options": [
-      { "text": "学者，你的记忆恢复了，我们可以一起重建你的生活。", "nextScene": 25 },
-      { "text": "我们首先要确保你的身体康复，然后我们可以一起讨论未来的计划。", "nextScene": 26 }
-    ]
-  },
-  {
-    "npcName": "艾莉娅",
-    "npcDialog": "艾尔文，我们的故事已经传遍了整个山谷。我们成为了人们心中的英雄。",
-    "npcAvatar": "/avatars/elya.png",
-    "backgroundVideo": "/videos/fame-and-legends.mp4",
-    "options": [
-      { "text": "艾莉娅，我们的成就归功于我们的勇气和团结。", "nextScene": 27 },
-      { "text": "我们应该利用我们的名声，帮助更多的人，传播智慧之谷的和平与繁荣。", "nextScene": 28 }
-    ]
-  },
-  {
-    "npcName": "向导",
-    "npcDialog": "恭喜你完成了所有探索！你的勇气和智慧让智慧之谷更加繁荣。现在，你可以选择重新开始冒险，或者结束这次旅程。",
-    "npcAvatar": "/avatars/guide.png",
-    "backgroundVideo": "/videos/ending-scene.mp4",
-    "options": [
-      { "text": "重新开始冒险，探索更多的未知世界。", "nextScene": 0 },
-      { "text": "结束游戏，享受这段美好的回忆。", "nextScene": 0 }
-    ]
-  }
-]
+    {
+      "npcName": "国王",
+      "npcDialog": "亲爱的臣民，为了庆祝我们王国的丰收，我将举办一场盛大的庆典。你们谁愿意帮我收集珍贵的礼物？",
+      "npcAvatar": "/avatars/king.png",
+      "backgroundVideo": "/videos/kingdom-celebration-announcement.mp4",
+      "options": [
+        {
+          "text": "尊敬的陛下，我愿意前往国外寻找奇珍异宝。",
+          "nextScene": 1
+        },
+        {
+          "text": "我更擅长管理事务，陛下可以派别人去。",
+          "nextScene": 2
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "陛下，我已准备好带领忠诚的助手前往国外寻找礼物。",
+      "npcAvatar": "/avatars/minister.png",
+      "backgroundVideo": "/videos/ministers-preparation.mp4",
+      "options": [
+        {
+          "text": "太好了，你将乘坐一艘巨大的帆船出发。",
+          "nextScene": 3
+        },
+        {
+          "text": "在出发前，我们需要确保帆船上的货物充足。",
+          "nextScene": 4
+        }
+      ]
+    },
+    {
+      "npcName": "助手",
+      "npcDialog": "大人，我们已经准备好了一船的补给和货物。",
+      "npcAvatar": "/avatars/assistant.png",
+      "backgroundVideo": "/videos/ship-preparation.mp4",
+      "options": [
+        {
+          "text": "那么，我们就可以扬帆起航了。",
+          "nextScene": 5
+        },
+        {
+          "text": "在出海前，我们应该检查一遍帆船。",
+          "nextScene": 6
+        }
+      ]
+    },
+    {
+      "npcName": "船员",
+      "npcDialog": "帆船已经准备好，海风轻拂，船帆鼓起，我们可以出发了。",
+      "npcAvatar": "/avatars/sailor.png",
+      "backgroundVideo": "/videos/ship-sailing.mp4",
+      "options": [
+        {
+          "text": "感谢你们的努力，我们现在正驶向第一个目的地。",
+          "nextScene": 7
+        },
+        {
+          "text": "请确保每个人都穿上了救生衣。",
+          "nextScene": 8
+        }
+      ]
+    },
+    {
+      "npcName": "港口工人",
+      "npcDialog": "欢迎来到我们的港口，旅行者。你们从哪里来？",
+      "npcAvatar": "/avatars/port-worker.png",
+      "backgroundVideo": "/videos/port-arrival.mp4",
+      "options": [
+        {
+          "text": "我们从遥远的王国来，寻找珍贵的礼物。",
+          "nextScene": 9
+        },
+        {
+          "text": "我们只是在这里休息一下。",
+          "nextScene": 10
+        }
+      ]
+    },
+    {
+      "npcName": "神秘老者",
+      "npcDialog": "你们似乎在寻找什么特殊的东西。我在这里等待，它将在不久之后到来。",
+      "npcAvatar": "/avatars/elder.png",
+      "backgroundVideo": "/videos/elder-waiting.mp4",
+      "options": [
+        {
+          "text": "我们不知道它在哪里，但我们会留意的。",
+          "nextScene": 11
+        },
+        {
+          "text": "你能告诉我们它是什么吗？",
+          "nextScene": 12
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "我们的旅程才刚刚开始，我们需要保持警惕。",
+      "npcAvatar": "/avatars/minister.png",
+      "backgroundVideo": "/videos/continuing-journey.mp4",
+      "options": [
+        {
+          "text": "是的，我们必须小心。",
+          "nextScene": 13
+        },
+        {
+          "text": "让我们继续前进吧。",
+          "nextScene": 14
+        }
+      ]
+    },
+    {
+      "npcName": "助手",
+      "npcDialog": "我们来到了一片广阔的森林，这里鸟语花香，生机勃勃。",
+      "npcAvatar": "/avatars/assistant.png",
+      "backgroundVideo": "/videos/forest-journey.mp4",
+      "options": [
+        {
+          "text": "这里的自然之美令人惊叹。",
+          "nextScene": 15
+        },
+        {
+          "text": "我们应该在这里休息一下。",
+          "nextScene": 16
+        }
+      ]
+    },
+    {
+      "npcName": "森林中的声音",
+      "npcDialog": "你们听到了吗？那声音似乎来自森林深处。",
+      "npcAvatar": "/avatars/forest-sound.png",
+      "backgroundVideo": "/videos/forest-sound.mp4",
+      "options": [
+        {"让我们悄悄地追踪声音的来源。",
+          "nextScene": 17
+        },
+        {
+          "text": "这可能是一个陷阱，我们应该保持距离。",
+          "nextScene": 18
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "我们找到了一个隐藏在森林深处的神秘场所。这里有一个巨大的瀑布，水流从高处倾泻而下。",
+      "npcAvatar": "/avatars/minister.png",
+      "backgroundVideo": "/videos/secret-place-discovery.mp4",
+      "options": [
+        {
+          "text": "这个瀑布的声音真的很震撼。",
+          "nextScene": 19
+        },
+        {
+          "text": "我们应该小心，这里可能隐藏着危险。",
+          "nextScene": 20
+        }
+      ]
+    },
+    {
+      "npcName": "时间的守护者",
+      "npcDialog": "我是时间的守护者，我在等待一个重要的时刻。只有当那个时刻到来时，我才能完成我的使命。",
+      "npcAvatar": "/avatars/time-guardian.png",
+      "backgroundVideo": "/videos/time-guardian-dialogue.mp4",
+      "options": [
+        {
+          "text": "我们很荣幸能遇见您。",
+          "nextScene": 21
+        },
+        {
+          "text": "请问，这个时刻是什么时候？",
+          "nextScene": 22
+        }
+      ]
+    },
+    {
+      "npcName": "助手",
+      "npcDialog": "我们告别了时间的守护者，继续我们的旅程。我们经历了许多奇妙的事情。",
+      "npcAvatar": "/avatars/assistant.png",
+      "backgroundVideo": "/videos/wonderful-experiences.mp4",
+      "options": [
+        {
+          "text": "这些经历一定会让庆典更加精彩。",
+          "nextScene": 23
+        },
+        {
+          "text": "我们一定要将这些经历记录下来。",
+          "nextScene": 24
+        }
+      ]
+    },
+    {
+      "npcName": "艺术家",
+      "npcDialog": "我在这里，是为了记录下这个世界的美好。每一个细节，每一个瞬间，都是我创作的灵感来源。",
+      "npcAvatar": "/avatars/artist.png",
+      "backgroundVideo": "/videos/artist-dialogue.mp4",
+      "options": [
+        {
+          "text": "您的作品一定很美，我愿意欣赏。",
+          "nextScene": 25
+        },
+        {
+          "text": "我也想尝试绘画，您能教我吗？",
+          "nextScene": 26
+        }
+      ]
+    },
+    {
+      "npcName": "农夫",
+      "npcDialog": "因为我相信，即使在最糟糕的时刻，也会有美好的事物发生。",
+      "npcAvatar": "/avatars/farmer.png",
+      "backgroundVideo": "/videos/farmer-dialogue.mp4",
+      "options": [
+        {
+          "text": "您的乐观精神很令人敬佩。",
+          "nextScene": 27
+        },
+        {
+          "text": "我希望能像您一样，在任何情况下都能保持乐观。",
+          "nextScene": 28
+        }
+      ]
+    },
+    {
+      "npcName": "大臣",
+      "npcDialog": "恭喜你们完成了任务，庆典一定会非常成功。",
+      "npcAvatar": "/avatars/king.png",
+      "backgroundVideo": "/videos/king-celebration-announcement.mp4",
+      "options": [
+        {
+          "text": "陛下，这是我从国外带回来的礼物。",
+          "nextScene": 29
+        },
+        {
+          "text": "陛下，这是我在森林中找到的神奇草药。",
+          "nextScene": 30
+        }
+      ]
+    },
+    {
+      "npcName": "向导",
+      "npcDialog": "恭喜你完成了所有探索！现在，你准备好开始新的冒险了吗？",
+      "npcAvatar": "/avatars/guide.png",
+      "backgroundVideo": "/videos/ending-scene.mp4",
+      "options": [
+        {
+          "text": "是的，我准备好了！",
+          "nextScene": 0
+        },
+        {
+          "text": "我想休息一下，再决定。",
+          "nextScene": 0
+        }
+      ]
+    }
+  ]
