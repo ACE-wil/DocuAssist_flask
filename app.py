@@ -15,7 +15,11 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import sqlite3
 from pathlib import Path
+import json
+from zhipuai import ZhipuAI
 
+# 填写您自己的APIKey
+client = ZhipuAI(api_key="b18f84a0d131140efa1e5f8b3641bd78.9MuoykZ6Ypnf9Nrh")
 # 在创建Flask应用后立即启用CORS
 
 db = SQLAlchemy()
@@ -69,6 +73,36 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.route('/api/example', methods=['GET'])
+def example():
+    # 模拟返回数据
+    response_data = {
+        'message': '这是来自后端的响应消息。'
+    }
+    return jsonify(response_data)
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    # 从请求中获取用户输入
+    user_input = request.json.get('message', '')
+
+    # 准备消息预设
+    messages_preset = [
+        {
+            "role": "user",
+            "content": user_input
+        }
+    ]
+
+    # 调用 ZhipuAI API
+    response = client.chat.completions.create(
+        model="glm-4-plus",
+        messages=messages_preset
+    )
+
+    # 返回生成的对话
+    return jsonify({'response': response.choices[0].message.content}), 200
 
 @app.route('/dashboard')
 @login_required
