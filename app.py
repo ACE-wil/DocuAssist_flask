@@ -115,11 +115,12 @@ def upload_file():
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    # 从请求中获取用户输入
+    # 从请求中获取用户输入和对话历史
     user_input = request.json.get('message', '')
+    chat_history = request.json.get('messages', [])
 
-    # 准备消息预设
-    messages_preset = [
+    # 将新的用户输入添加到消息历史
+    messages_preset = chat_history + [
         {
             "role": "user",
             "content": user_input
@@ -134,7 +135,6 @@ def chat():
 
     # 返回生成的对话
     return jsonify({'response': response.choices[0].message.content}), 200
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
