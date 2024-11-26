@@ -17,6 +17,14 @@ import sqlite3
 from pathlib import Path
 import json
 from zhipuai import ZhipuAI
+from pathlib import Path
+from openai import OpenAI
+from zhipuai import ZhipuAI
+import os
+from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+import os
+
 
 # 填写您自己的APIKey
 client = ZhipuAI(api_key="b18f84a0d131140efa1e5f8b3641bd78.9MuoykZ6Ypnf9Nrh")
@@ -74,13 +82,36 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/api/example', methods=['GET'])
-def example():
-    # 模拟返回数据
-    response_data = {
-        'message': '这是来自后端的响应消息。'
-    }
-    return jsonify(response_data)
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    load_dotenv()
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(filepath)
+    
+    # 上传文件到 Kimi
+    kimi_client = OpenAI(
+        api_key='sk-LjTqTa7tIVwLQInDmRILGchIP9X1vXG3mARWqFMbKxNRKgVn',
+        base_url="https://api.moonshot.cn/v1",
+    )
+    
+    with open(filepath, 'rb') as f:
+        file_object = kimi_client.files.create(
+            file=f,
+            purpose="file-extract"
+        )
+    
+    # 获取文件内容
+    file_content = kimi_client.files.content(file_id=file_object.id).text
+    
+    # 清理上传的文件
+    os.remove(filepath)
+    
+    return jsonify({
+        'status': 'success',
+        'parsedContent': file_content
+    })
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -237,7 +268,7 @@ def report():
     # 平均答题时间（分钟）
     avg_answer_time = random.uniform(5, 15)
     
-    # 最受欢迎的题目类型
+    # 最受欢迎的题��类型
     popular_question_types = [
         ('算法', random.randint(100, 200)),
         ('数据结构', random.randint(80, 150)),
