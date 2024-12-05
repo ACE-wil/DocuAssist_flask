@@ -499,6 +499,31 @@ def create_app():
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/get-apps', methods=['GET'])
+def get_apps():
+    try:
+        # 查询所有应用数据
+        applications = Applications.query.all()
+        
+        # 将查询结果转换为字典列表
+        apps_data = [
+            {
+                'id': app.id,
+                'app_name': app.app_name,
+                'app_description': app.app_description,
+                'creator_name': app.creator_name,
+                'app_avatar_path': app.app_avatar_path,
+                'doc_file_path': app.doc_file_path,
+                'created_at': app.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            for app in applications
+        ]
+        
+        return jsonify({'applications': apps_data}), 200
+        
+    except Exception as e:
+        print(f"错误: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
