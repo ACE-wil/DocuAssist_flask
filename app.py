@@ -433,6 +433,7 @@ class Applications(db.Model):
     favorite_count = db.Column(db.Integer, default=0)
     used_models = db.Column(db.String(255))
     prize = db.Column(db.String(100))
+    appId = db.Column(db.String(100))
 
 @app.route('/api/create-app', methods=['POST'])
 def create_app():
@@ -517,6 +518,7 @@ def get_apps():
             {
                 'id': app.id,
                 'userId': app.userId,
+                'appId': app.appId,
                 'app_name': app.app_name,
                 'app_description': app.app_description,
                 'creator_name': app.creator_name,
