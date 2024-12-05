@@ -268,7 +268,7 @@ def report():
     # 平均答题时间（分钟）
     avg_answer_time = random.uniform(5, 15)
     
-    # 最受欢迎的题��类型
+    # 最受欢迎的题类型
     popular_question_types = [
         ('算法', random.randint(100, 200)),
         ('数据结构', random.randint(80, 150)),
@@ -420,12 +420,19 @@ class SettingsForm(FlaskForm):
 # 添加 Application 模型定义
 class Applications(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer, nullable=False)
     app_name = db.Column(db.String(100), nullable=False)
     app_description = db.Column(db.Text)
     creator_name = db.Column(db.String(100))
     app_avatar_path = db.Column(db.String(255))
     doc_file_path = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    visit_count = db.Column(db.Integer, default=0)
+    comment_count = db.Column(db.Integer, default=0)
+    favorite_count = db.Column(db.Integer, default=0)
+    used_models = db.Column(db.String(255))
+    prize = db.Column(db.String(100))
 
 @app.route('/api/create-app', methods=['POST'])
 def create_app():
@@ -509,12 +516,20 @@ def get_apps():
         apps_data = [
             {
                 'id': app.id,
+                'userId': app.userId,
                 'app_name': app.app_name,
                 'app_description': app.app_description,
                 'creator_name': app.creator_name,
                 'app_avatar_path': app.app_avatar_path,
                 'doc_file_path': app.doc_file_path,
-                'created_at': app.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                'created_at': app.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'visit_count': app.visit_count,
+                'comment_count': app.comment_count,
+                'favorite_count': app.favorite_count,
+                'used_models': app.used_models,
+                'prize': app.prize,
+                'created_at': app.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'updated_at': app.updated_at.strftime('%Y-%m-%d %H:%M:%S')
             }
             for app in applications
         ]
