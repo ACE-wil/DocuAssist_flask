@@ -10,7 +10,6 @@ from datetime import timedelta, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from urllib.parse import urlparse
 import random
-import os
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import sqlite3
@@ -19,13 +18,21 @@ import json
 from zhipuai import ZhipuAI
 from pathlib import Path
 from openai import OpenAI
-from zhipuai import ZhipuAI
-import os
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 import os
+from qiniu import Auth, put_data, etag  # 导入七牛SDK所需的模块
+import time
 
+# 需要填写你的账号的Access Key和Secret Key
+AK_key = 'Ydj8weHDUaZqIWdrG49mLSPdZnpRtrbSR-oEYlDF'  # Access Key
+SK_key = 'MgYH-gMbrHdIbCgdLc-PFg9dEL_tOI5-LdpSg3tB'  # Secret Key
 
+# 这是你的七牛空间名
+bucket_name = 'docu-assist'  # 存储空间名称
+
+# 构建鉴权对象
+q = Auth(AK_key, SK_key)
 # 填写您自己的APIKey
 client = ZhipuAI(api_key="b18f84a0d131140efa1e5f8b3641bd78.9MuoykZ6Ypnf9Nrh")
 # 在创建Flask应用后立即启用CORS
@@ -435,9 +442,22 @@ class Applications(db.Model):
     prize = db.Column(db.String(100))
     appId = db.Column(db.String(100))
 
+class UserGame(db.Model):
+    __tablename__ = 'user_game'  # 显式指定表名
+    userId = db.Column(db.Integer, primary_key=True)
+    app_name = db.Column(db.String(100), nullable=False)
+    app_description = db.Column(db.Text)
+    creator_name = db.Column(db.String(100))
+    app_avatar = db.Column(db.Text)
+    user_doc = db.Column(db.Text)
+
 @app.route('/api/create-app', methods=['POST'])
 def create_app():
     try:
+        app_name = request.form.get('app_name')
+        app_description = request.form.get('app_description')
+        creator_name = request.form.get('creator_name')
+
         # 打印数据库路径
         db_path = os.path.abspath(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', ''))
         print(f"\n数据库文件路径: {db_path}")
@@ -449,54 +469,66 @@ def create_app():
         # 确保上传目录存在
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
             os.makedirs(app.config['UPLOAD_FOLDER'])
-
-        app_name = request.form.get('app_name')
-        app_description = request.form.get('app_description')
-        creator_name = request.form.get('creator_name')
         
-        # 处理头像文件
+         # 处理头像文件
         app_avatar_path = None
         if 'app_avatar' in request.files:
             avatar_file = request.files['app_avatar']
             if avatar_file and avatar_file.filename:
-                filename = secure_filename(f"{app_name}_avatar_{avatar_file.filename}")
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                avatar_file.save(filepath)
-                app_avatar_path = filepath
-                print(f"头像文件已保存到: {os.path.abspath(filepath)}")
-
+                filename = secure_filename(f"{app_name}_avatar_{int(time.time())}_{avatar_file.filename}")
+                print(f"头像文件名: {filename}")
+                # 生成上传凭证
+                token = q.upload_token(bucket_name, f'avatar/{filename}')
+                # 直接上传文件内容
+                ret, info = put_data(token, key=f'avatar/{filename}', data=avatar_file.read())
+                if ret is not None:
+                    file_key = ret['key']  # 上传后七牛云返回的文件名
+                    base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
+                    app_avatar_path = base_url + file_key  # 构造完整的文件外链
+                    print(f"头像文件已上传到七牛云: {app_avatar_path}")
+                else:
+                    print(f"上传头像文件失败: {info}")
+        
         # 处理文档文件
         doc_file_path = None
         if 'doc_file' in request.files:
             doc_file = request.files['doc_file']
             if doc_file and doc_file.filename:
-                filename = secure_filename(f"{app_name}_doc_{doc_file.filename}")
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                doc_file.save(filepath)
-                doc_file_path = filepath
-                print(f"文档文件已保存到: {os.path.abspath(filepath)}")
-
+                filename = secure_filename(f"{app_name}_doc_{int(time.time())}_{doc_file.filename}")
+                print(f"文档文件名: {filename}")
+                # 生成上传凭证
+                token = q.upload_token(bucket_name, f'doc/{filename}')
+                # 直接上传文件内容
+                ret, info = put_data(token, key=f'doc/{filename}', data=doc_file.read())
+                if ret is not None:
+                    file_key = ret['key']  # 上传后七牛云返回的文件名
+                    base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
+                    doc_file_path = base_url + file_key  # 构造完整的文件外链
+                else:
+                    print(f"上传文档文件失败: {info}")
         # 使用 SQLAlchemy ORM
-        new_app = Applications(
+        new_app = UserGame(
+            userId=12619,
             app_name=app_name,
             app_description=app_description,
             creator_name=creator_name,
-            app_avatar_path=app_avatar_path,
-            doc_file_path=doc_file_path
+            app_avatar=app_avatar_path,
+            user_doc=doc_file_path
         )
         
         db.session.add(new_app)
         db.session.commit()
-        print(f"数据已保存到数据库表: applications")
+        print(f"数据已保存到数据库表: userGame")
 
         response_data = {
             'message': '应用创建成功',
             'received_data': {
-                'app_name': app_name,
-                'app_description': app_description,
-                'creator_name': creator_name,
-                'app_avatar': app_avatar_path,
-                'doc_file': doc_file_path
+                'success': True,
+                # 'app_name': app_name,
+                # 'app_description': app_description,
+                # 'creator_name': creator_name,
+                # 'app_avatar': app_avatar_path,
+                # 'doc_file': doc_file_path
             }
         }
         
