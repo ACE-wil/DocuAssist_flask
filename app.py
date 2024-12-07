@@ -23,6 +23,9 @@ from dotenv import load_dotenv
 import os
 from qiniu import Auth, put_data, etag  # 导入七牛SDK所需的模块
 import time
+from celery import Celery
+from main.api.generate_scene import generate_scene
+from concurrent.futures import ThreadPoolExecutor
 
 # 需要填写你的账号的Access Key和Secret Key
 AK_key = 'Ydj8weHDUaZqIWdrG49mLSPdZnpRtrbSR-oEYlDF'  # Access Key
@@ -444,12 +447,14 @@ class Applications(db.Model):
 
 class UserGame(db.Model):
     __tablename__ = 'user_game'  # 显式指定表名
-    userId = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer)
     app_name = db.Column(db.String(100), nullable=False)
     app_description = db.Column(db.Text)
     creator_name = db.Column(db.String(100))
     app_avatar = db.Column(db.Text)
     user_doc = db.Column(db.Text)
+    scene = db.Column(db.Text, nullable=True)
 
 @app.route('/api/create-app', methods=['POST'])
 def create_app():
@@ -520,6 +525,12 @@ def create_app():
         db.session.commit()
         print(f"数据已保存到数据库表: userGame")
 
+         # 异步调用 generate_scene_task
+        moviesName = '绿皮书'  # 示例电影名称
+        words_array = ['access', 'accessory', 'accident']  # 示例单词数组
+        executor.submit(generate_scene_task, new_app.id, moviesName, words_array)
+
+
         response_data = {
             'message': '应用创建成功',
             'received_data': {
@@ -573,6 +584,40 @@ def get_apps():
     except Exception as e:
         print(f"错误: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+def make_celery(app):
+    celery = Celery(
+        app.import_name,
+        broker='redis://localhost:6379/0',  # 使用 Redis 作为消息代理
+        backend='redis://localhost:6379/0'
+    )
+    celery.conf.update(app.config)
+    return celery
+
+
+celery = make_celery(app)
+
+
+@celery.task
+def generate_scene_task(app_id, moviesName, words_array):
+    # 生成场景数据
+    print(f"开始生成场景数据")
+    scene_data = generate_scene(moviesName, words_array)
+    print(f"场景数据生成完成")
+    # 使用应用上下文
+    with app.app_context():
+        try:
+            # 更新数据库记录
+            app_record = UserGame.query.get(app_id)
+            if app_record:
+                app_record.scene = json.dumps(scene_data)  # 将场景数据转换为 JSON 字符串存储
+                db.session.commit()
+                print(f"应用 {app_id} 的场景数据已更新")
+        except Exception as e:
+            print(f"更新应用 {app_id} 的场景数据时出错: {str(e)}")
+            db.session.rollback()
+
+executor = ThreadPoolExecutor(max_workers=5)
 
 if __name__ == '__main__':
     app.run(debug=True)
