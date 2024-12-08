@@ -15,7 +15,7 @@ def generate_scene(moviesName, words_array):
             {"word":"accessory","dialog":"电影中的无脸男可以被视为千寻冒险中的一个accessory，因为他在某些情况下帮助了她。"}]；
             注意：对话中文夹杂英文单词，不要有中文提示，不理解可以看我示例里面的dialog""",
             "npcAvatar": "http://snjxzerf4.hn-bkt.clouddn.com/avatar/lvpishu.jpeg",
-            "backgroundVideo": "http://snjxzerf4.hn-bkt.clouddn.com/video/lvpishu.mp4"
+            "backgroundVideo": "http://snjxzerf4.hn-bkt.clouddn.com/video/lvpishu_1.mp4"
         },
         {
             "npcName": "千与千寻",

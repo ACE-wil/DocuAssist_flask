@@ -454,6 +454,7 @@ class UserGame(db.Model):
     creator_name = db.Column(db.String(100))
     app_avatar = db.Column(db.Text)
     user_doc = db.Column(db.Text)
+    type = db.Column(db.String(100))
     scene = db.Column(db.Text, nullable=True)
 
 @app.route('/api/create-app', methods=['POST'])
@@ -518,7 +519,8 @@ def create_app():
             app_description=app_description,
             creator_name=creator_name,
             app_avatar=app_avatar_path,
-            user_doc=doc_file_path
+            user_doc=doc_file_path,
+            type='english'
         )
         
         db.session.add(new_app)
@@ -548,6 +550,30 @@ def create_app():
     except Exception as e:
         print(f"错误: {str(e)}")
         db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/get-my-apps', methods=['GET'])
+def get_my_apps():
+    try:
+        myApps = UserGame.query.filter_by(userId=12619).all()
+
+        myApps_data = [
+            {
+                'id': app.id,
+                'app_name': app.app_name,
+                'app_description': app.app_description,
+                'creator_name': app.creator_name,
+                'app_avatar': app.app_avatar,
+                'user_doc': app.user_doc,
+                'type': app.type,
+                'scene': app.scene
+            }
+            for app in myApps
+        ]
+        
+        return jsonify({'myApps': myApps_data}), 200
+    except Exception as e:
+        print(f"错误: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/get-apps', methods=['GET'])
