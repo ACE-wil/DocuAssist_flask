@@ -26,6 +26,7 @@ import time
 from celery import Celery
 from main.api.generate_scene import generate_scene
 from concurrent.futures import ThreadPoolExecutor
+from main.api.getWordsArr import get_words_arr
 
 # 需要填写你的账号的Access Key和Secret Key
 AK_key = 'Ydj8weHDUaZqIWdrG49mLSPdZnpRtrbSR-oEYlDF'  # Access Key
@@ -457,12 +458,17 @@ class UserGame(db.Model):
     type = db.Column(db.String(100))
     scene = db.Column(db.Text, nullable=True)
 
+# 创建一个全局的线程池执行器
+executor = ThreadPoolExecutor(max_workers=5)
+
 @app.route('/api/create-app', methods=['POST'])
 def create_app():
     try:
         app_name = request.form.get('app_name')
         app_description = request.form.get('app_description')
         creator_name = request.form.get('creator_name')
+        game_type = request.form.get('game_type')
+        story_type = request.form.get('story_type')
 
         # 打印数据库路径
         db_path = os.path.abspath(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', ''))
@@ -500,37 +506,74 @@ def create_app():
         if 'doc_file' in request.files:
             doc_file = request.files['doc_file']
             if doc_file and doc_file.filename:
-                filename = secure_filename(f"{app_name}_doc_{int(time.time())}_{doc_file.filename}")
-                print(f"文档文件名: {filename}")
-                # 生成上传凭证
-                token = q.upload_token(bucket_name, f'doc/{filename}')
-                # 直接上传文件内容
-                ret, info = put_data(token, key=f'doc/{filename}', data=doc_file.read())
-                if ret is not None:
-                    file_key = ret['key']  # 上传后七牛云返回的文件名
-                    base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
-                    doc_file_path = base_url + file_key  # 构造完整的文件外链
-                else:
-                    print(f"上传文档文件失败: {info}")
-        # 使用 SQLAlchemy ORM
-        new_app = UserGame(
-            userId=12619,
-            app_name=app_name,
-            app_description=app_description,
-            creator_name=creator_name,
-            app_avatar=app_avatar_path,
-            user_doc=doc_file_path,
-            type='english'
-        )
-        
-        db.session.add(new_app)
-        db.session.commit()
-        print(f"数据已保存到数据库表: userGame")
+                # 保存文件到本地
+                local_filename = secure_filename(f"{app_name}_doc_{int(time.time())}_{doc_file.filename}")
+                local_file_path = os.path.join(app.config['UPLOAD_FOLDER'], local_filename)
+                doc_file.save(local_file_path)
+                print(f"文档文件已保存到本地: {local_file_path}")
 
-         # 异步调用 generate_scene_task
-        moviesName = '绿皮书'  # 示例电影名称
-        words_array = ['access', 'accessory', 'accident']  # 示例单词数组
-        executor.submit(generate_scene_task, new_app.id, moviesName, words_array)
+        # 上传文件到线上
+        filename = secure_filename(f"{app_name}_doc_{int(time.time())}_{doc_file.filename}")
+        print(f"文档文件名: {filename}")
+        token = q.upload_token(bucket_name, f'doc/{filename}')
+        
+        # 读取本地文件内容并上传
+        with open(local_file_path, 'rb') as f:
+            file_data = f.read()
+            ret, info = put_data(token, key=f'doc/{filename}', data=file_data)
+        
+        if ret is not None:
+            file_key = ret['key']  # 上传后七牛云返回的文件名
+            base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
+            doc_file_path = base_url + file_key  # 构造完整的文件外链
+            print(f"文档文件已上传到七牛云: {doc_file_path}")
+            # 使用 SQLAlchemy ORM
+            new_app = UserGame(
+                userId=12619,
+                app_name=app_name,
+                app_description=app_description,
+                creator_name=creator_name,
+                app_avatar=app_avatar_path,
+                user_doc=doc_file_path,
+                type=game_type
+            )
+        
+            db.session.add(new_app)
+            db.session.commit()
+            print(f"数据已保存到数据库表: userGame")
+
+            moviesName = '绿皮书'  # 设置一个合理的默认值
+            if(story_type == 'adventure'):
+                moviesName = '千与千寻'
+            elif(story_type == 'enlightenment'):
+                moviesName = '绿皮书'
+            print('电影名', moviesName)
+            # 异步获取单词数组并生成场景
+            def process_app_creation(local_file_path, app_id, moviesName):
+                words_array = get_words_arr(local_file_path)
+                print('单词数组', words_array)
+                generate_scene_task(app_id, moviesName, words_array[0])
+
+            # 提交异步任务
+            executor.submit(process_app_creation, local_file_path, new_app.id, moviesName)
+
+            # 立即返回成功响应
+            response_data = {
+                'message': '应用创建成功',
+                'received_data': {
+                    'success': True,
+                    # 'app_name': app_name,
+                    # 'app_description': app_description,
+                    # 'creator_name': creator_name,
+                    # 'app_avatar': app_avatar_path,
+                    # 'doc_file': doc_file_path
+                }
+            }
+            
+            return jsonify(response_data), 201
+        else:
+            print(f"上传文档文件失败: {info}")
+
 
 
         response_data = {
@@ -642,8 +685,6 @@ def generate_scene_task(app_id, moviesName, words_array):
         except Exception as e:
             print(f"更新应用 {app_id} 的场景数据时出错: {str(e)}")
             db.session.rollback()
-
-executor = ThreadPoolExecutor(max_workers=5)
 
 if __name__ == '__main__':
     app.run(debug=True)
