@@ -28,17 +28,25 @@ from main.api.generate_scene import generate_scene
 from concurrent.futures import ThreadPoolExecutor
 from main.api.getWordsArr import get_words_arr
 
-# 需要填写你的账号的Access Key和Secret Key
-AK_key = 'Ydj8weHDUaZqIWdrG49mLSPdZnpRtrbSR-oEYlDF'  # Access Key
-SK_key = 'MgYH-gMbrHdIbCgdLc-PFg9dEL_tOI5-LdpSg3tB'  # Secret Key
+# 加载.env文件
+load_dotenv()
+
+# 从环境变量中获取敏感信息
+ZHIPUAI_API_KEY = os.getenv('ZHIPUAI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+QINIU_AK = os.getenv('QINIU_AK')
+QINIU_SK = os.getenv('QINIU_SK')
+QINIU_BUCKET_NAME = os.getenv('QINIU_BUCKET_NAME')
+# 从环境变量中获取敏感信息
+CORS_ORIGINS = os.getenv('CORS_ORIGINS')
 
 # 这是你的七牛空间名
 bucket_name = 'docu-assist'  # 存储空间名称
 
 # 构建鉴权对象
-q = Auth(AK_key, SK_key)
+q = Auth(QINIU_AK, QINIU_SK)
 # 填写您自己的APIKey
-client = ZhipuAI(api_key="b18f84a0d131140efa1e5f8b3641bd78.9MuoykZ6Ypnf9Nrh")
+client = ZhipuAI(api_key=ZHIPUAI_API_KEY)
 # 在创建Flask应用后立即启用CORS
 
 db = SQLAlchemy()
@@ -61,7 +69,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 设置为16MB
 # 配置 CORS
 CORS(app, resources={
     r"/api/*": {
-        "origins": ["http://localhost:3000"],  # React 开发服务器地址
+        "origins": [CORS_ORIGINS],  # React 开发服务器地址
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Accept", "X-Requested-With"],
         "supports_credentials": True,
@@ -103,7 +111,7 @@ def upload_file():
     
     # 上传文件到 Kimi
     kimi_client = OpenAI(
-        api_key='sk-LjTqTa7tIVwLQInDmRILGchIP9X1vXG3mARWqFMbKxNRKgVn',
+        api_key=OPENAI_API_KEY,
         base_url="https://api.moonshot.cn/v1",
     )
     
