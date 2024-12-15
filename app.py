@@ -148,7 +148,7 @@ def chat():
 
     # 调用 ZhipuAI API
     response = client.chat.completions.create(
-        model="glm-4-plus",
+        model="glm-4-flash",
         messages=messages_preset
     )
 

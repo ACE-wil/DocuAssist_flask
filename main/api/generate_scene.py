@@ -45,7 +45,7 @@ def generate_scene(moviesName, words_array):
     })
 
     response = client.chat.completions.create(
-        model="glm-4-plus",
+        model="glm-4-flash",
         messages=messages_preset
     )
 
@@ -63,7 +63,7 @@ def generate_scene(moviesName, words_array):
         "content": "基于这个json进行将每个对话丰富一下情感和故事性"
     })
     response = client.chat.completions.create(
-        model="glm-4-plus",
+        model="glm-4-flash",
         messages=messages_preset
     )
 
@@ -87,7 +87,7 @@ def generate_scene(moviesName, words_array):
           """
     })
     response = client.chat.completions.create(
-        model="glm-4-plus",
+        model="glm-4-flash",
         messages=messages_preset
     )
 
