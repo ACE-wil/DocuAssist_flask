@@ -6,14 +6,14 @@ def generate_scene(moviesName, words_array):
 
     assistant_preset = [
         {
-            "npcName": "绿皮书",
-            "content": """你是月光仙子，你现在需要带领用户遨游在绿皮书世界，接受用户单词的同时高效地教会用户单词。
-            拿《绿皮书》电影来说，而不是一直切换电影，并以json形式储存,示例:
-            [{"word":"access","dialog":"在《千与千寻》中，千寻意外地进入了一个神秘的世界，她需要找到通往这个世界的access以返回现实。"},
-            {"word":"accessory","dialog":"电影中的无脸男可以被视为千寻冒险中的一个accessory，因为他在某些情况下帮助了她。"}]；
-            注意：对话主要为中文，夹杂唯一的一个英文单词，不要有中文提示，不理解可以看我示例里面的dialog""",
-            "npcAvatar": "http://cdn.docuparser.top/avatar/lvpishu.jpeg",
-            "backgroundVideo": "http://cdn.docuparser.top/video/lvpishu.mp4"
+        "npcName": "绿皮书",
+        "content": """你是月光仙子，你现在需要带领用户遨游在绿皮书世界，接受用户单词的同时高效地教会用户单词。
+        拿《绿皮书》电影来说，以的口吻讲述故事，并以json形式储存,注意：对话主要为中文，中间只有唯一的一个生词英文单词，不要有中文提示，不理解可以看我示例里面的dialog示例:
+        [{"word":"access","dialog":"在《绿皮书》中，千寻意外地进入了一个神秘的世界，她需要找到通往这个世界的access以返回现实。"},
+        {"word":"accessory","dialog":"电影中的无脸男可以被视为千寻冒险中的一个accessory，因为他在某些情况下帮助了她。"}]；
+        """,
+        "npcAvatar": "http://cdn.docuparser.top/avatar/lvpishu.jpeg",
+        "backgroundVideo": "http://cdn.docuparser.top/video/lvpishu.mp4"
         },
         {
             "npcName": "千与千寻",
@@ -92,64 +92,9 @@ def generate_scene(moviesName, words_array):
     print('给每个内容加选项完成')
 
     print('开始清除json多余字段')
-    try:
-        if not add_options or add_options.isspace():
-            raise ValueError("add_options 为空或只包含空白字符")
-        
-        # 更严格的 JSON 清理
-        cleaned_text = add_options
-        
-        # 移除 markdown 代码块标记
-        if "```json" in cleaned_text:
-            cleaned_text = cleaned_text.split("```json")[1]
-        elif "```" in cleaned_text:
-            cleaned_text = cleaned_text.split("```")[0]
-        cleaned_text = cleaned_text.strip()
-        
-        # 修复 JSON 格式问题
-        import re
-        
-        # 修复属性名的引号问题
-        cleaned_text = re.sub(r'(\s*)(\w+)(:)', r'\1"\2"\3', cleaned_text)
-        
-        # 修复布尔值和其他常见问题
-        replacements = {
-            "'": "\"",          # 单引号替换为双引号
-            "True": "true",     # Python布尔值替换为JSON布尔值
-            "False": "false",
-            "None": "null",
-            ",]": "]",         # 移除数组最后多余的逗号
-            ",}": "}"          # 移除对象最后多余的逗号
-        }
-        
-        for old, new in replacements.items():
-            cleaned_text = cleaned_text.replace(old, new)
-        
-        try:
-            clear_json_data = json.loads(cleaned_text)
-        except json.JSONDecodeError as e:
-            print(f"JSON 解析错误位置: 行 {e.lineno}, 列 {e.colno}")
-            print(f"错误信息: {e.msg}")
-            print("问题字符附近的内容:")
-            lines = cleaned_text.split('\n')
-            if e.lineno <= len(lines):
-                problem_line = lines[e.lineno-1]
-                print(f"第 {e.lineno} 行: {problem_line}")
-                print(" " * (e.colno-1) + "^")
-                print("\n完整的清理后文本:")
-                print(cleaned_text)
-            raise
-        
-        if not isinstance(clear_json_data, list):
-            raise ValueError("解析后的数据不是列表格式")
-            
-        print('成功清除json多余字段')
-        
-    except Exception as e:
-        print(f'错误类型: {type(e).__name__}')
-        print(f'错误信息: {str(e)}')
-        print('原始数据:', add_options)
-        raise
+    clear_json_data = json.loads(add_options.replace("```json", "").replace("```", "").replace("True", "true").replace("False", "false").strip())
+    print(clear_json_data)
+    print('完成清除json多余字段')
     
     print('开始选项随机操作')
     import random
