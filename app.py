@@ -27,6 +27,8 @@ from celery import Celery
 from main.api.generate_scene import generate_scene
 from concurrent.futures import ThreadPoolExecutor
 from main.api.getWordsArr import get_words_arr
+from flask_jwt_extended import JWTManager, create_access_token
+
 
 # 加载.env文件
 load_dotenv()
@@ -38,10 +40,10 @@ QINIU_AK = os.getenv('QINIU_AK')
 QINIU_SK = os.getenv('QINIU_SK')
 QINIU_BUCKET_NAME = os.getenv('QINIU_BUCKET_NAME')
 # 从环境变量中获取敏感信息
-CORS_ORIGINS = os.getenv('CORS_ORIGINS')
+
 
 # 这是你的七牛空间名
-bucket_name = 'docu-assist'  # 存储空间名称
+bucket_name = 'docu-assist-base'  # 存储空间名称
 
 # 构建鉴权对象
 q = Auth(QINIU_AK, QINIU_SK)
@@ -65,11 +67,13 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 设置为16MB
+# CORS_ORIGINS = os.getenv('CORS_ORIGINS')
+CORS_ORIGINS = os.getenv('CORS_ORIGINS', '').split(',')
 
 # 配置 CORS
 CORS(app, resources={
     r"/api/*": {
-        "origins": [CORS_ORIGINS],  # React 开发服务器地址
+        "origins": CORS_ORIGINS,  # React 开发服务器地址
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Accept", "X-Requested-With"],
         "supports_credentials": True,
@@ -78,6 +82,9 @@ CORS(app, resources={
     }
 })
 
+# 3. 初始化JWT
+app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # 设置密钥
+jwt = JWTManager(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
 app.config['UPLOAD_FOLDER'] = str(UPLOAD_DIR)  # Flask需要字符串路径
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 增加到 50MB
@@ -372,6 +379,28 @@ def login():
             return render_template('login.html', form=form, error=True)
     return render_template('login.html', form=form, error=False)
 
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    data = request.get_json()
+    user = User.query.filter_by(username=data.get('username')).first()
+    
+    if user and check_password_hash(user.password, data.get('password')):
+        # 生成JWT令牌
+        token = create_access_token(identity=user.id)
+        return jsonify({
+            'status': 'success',
+            'token': token,
+            'user': {
+                'id': user.id,
+                'username': user.username
+            }
+        })
+    
+    return jsonify({
+        'status': 'error',
+        'message': '用户名或密码错误'
+    }), 401
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -503,7 +532,7 @@ def create_app():
                 ret, info = put_data(token, key=f'avatar/{filename}', data=avatar_file.read())
                 if ret is not None:
                     file_key = ret['key']  # 上传后七牛云返回的文件名
-                    base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
+                    base_url = 'http://cdn.docuparser.top/'  # 七牛云的默认域名
                     app_avatar_path = base_url + file_key  # 构造完整的文件外链
                     print(f"头像文件已上传到七牛云: {app_avatar_path}")
                 else:
@@ -532,7 +561,7 @@ def create_app():
         
         if ret is not None:
             file_key = ret['key']  # 上传后七牛云返回的文件名
-            base_url = 'http://snjxzerf4.hn-bkt.clouddn.com/'  # 七牛云的默认域名
+            base_url = 'http://cdn.docuparser.top/'  # 七牛云的默认域名
             doc_file_path = base_url + file_key  # 构造完整的文件外链
             print(f"文档文件已上传到七牛云: {doc_file_path}")
             # 使用 SQLAlchemy ORM
@@ -559,7 +588,7 @@ def create_app():
             # 异步获取单词数组并生成场景
             def process_app_creation(local_file_path, app_id, moviesName):
                 words_array = get_words_arr(local_file_path)
-                print('单词数组', words_array)
+                print('单词数组', words_array[0])
                 generate_scene_task(app_id, moviesName, words_array[0])
 
             # 提交异步任务
@@ -695,4 +724,5 @@ def generate_scene_task(app_id, moviesName, words_array):
             db.session.rollback()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
