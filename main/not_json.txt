@@ -1,122 +1,276 @@
-"让我们悄悄地追踪声音的来源。",
-          "nextScene": 17
-        },
-        {
-          "text": "这可能是一个陷阱，我们应该保持距离。",
-          "nextScene": 18
-        }
-      ]
+开始清除json多余字段
+测试 [
+    {
+        "word": "aboard",
+        "dialog": "1962年的一个清晨，朝阳透过车窗洒在托尼那刚毅的脸上，他启动了那辆闪亮的轿车，车窗缓缓降下，唐·雪利紧紧地握住了行李箱的把手。‘准备好了吗，托尼？’唐的声音带着一丝紧张和期待。托尼回头给了他一个坚定的笑容，‘是的，我的朋友，让我们aboard，向着未知的旅程出发吧。’",
+        "options": [
+            { "text": "入口", "isCorrect": false },
+            { "text": "上车", "isCorrect": true },
+            { "text": "登机", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "大臣",
-      "npcDialog": "我们找到了一个隐藏在森林深处的神秘场所。这里有一个巨大的瀑布，水流从高处倾泻而下。",
-      "npcAvatar": "/avatars/minister.png",
-      "backgroundVideo": "/videos/secret-place-discovery.mp4",
-      "options": [
-        {
-          "text": "这个瀑布的声音真的很震撼。",
-          "nextScene": 19
-        },
-        {
-          "text": "我们应该小心，这里可能隐藏着危险。",
-          "nextScene": 20
-        }
-      ]
+        "word": "about",
+        "dialog": "车子缓缓驶出纽约的喧嚣，唐望着窗外不断后退的城市，他的眼神中充满了对未来的憧憬。‘托尼，你知道的，这次巡演对于我们来说意义重大。’唐的声音低沉而有力。托尼点了点头，‘我明白，关于这个计划，你打算怎么跟我解释？’唐的眼神中闪过一丝坚定，‘我要让这个世界听到我们的声音，about平等和尊重。’",
+        "options": [
+            { "text": "关于", "isCorrect": true },
+            { "text": "附近", "isCorrect": false },
+            { "text": "关于...而", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "时间的守护者",
-      "npcDialog": "我是时间的守护者，我在等待一个重要的时刻。只有当那个时刻到来时，我才能完成我的使命。",
-      "npcAvatar": "/avatars/time-guardian.png",
-      "backgroundVideo": "/videos/time-guardian-dialogue.mp4",
-      "options": [
-        {
-          "text": "我们很荣幸能遇见您。",
-          "nextScene": 21
-        },
-        {
-          "text": "请问，这个时刻是什么时候？",
-          "nextScene": 22
-        }
-      ]
+        "word": "above",
+        "dialog": "夜幕降临，他们在一家小旅馆前停下。唐站在窗前，仰望着满天繁星，他的眼神中充满了对生活的热爱和对梦想的追求。‘托尼，你看，这些星星，它们似乎在告诉我们，无论遇到什么困难，我们都要above一切，坚持自己的信念。’托尼默默地站在他身边，心中涌起一股暖流。",
+        "options": [
+            { "text": "以上", "isCorrect": true },
+            { "text": "之上", "isCorrect": true },
+            { "text": "在...之上", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "助手",
-      "npcDialog": "我们告别了时间的守护者，继续我们的旅程。我们经历了许多奇妙的事情。",
-      "npcAvatar": "/avatars/assistant.png",
-      "backgroundVideo": "/videos/wonderful-experiences.mp4",
-      "options": [
-        {
-          "text": "这些经历一定会让庆典更加精彩。",
-          "nextScene": 23
-        },
-        {
-          "text": "我们一定要将这些经历记录下来。",
-          "nextScene": 24
-        }
-      ]
+        "word": "abroad",
+        "dialog": "在一座小镇的演出结束后，他们在一家小餐馆用餐。唐望着窗外的夜色，缓缓开口：‘托尼，我曾在欧洲abroad演出，那里的观众对音乐有着深深的热爱，他们让我看到了音乐的力量。’托尼的眼神中闪烁着好奇，‘那和我们这里有什么不同呢？’唐沉思片刻，‘那里的音乐是一种更加纯粹的表达，一种超越语言和文化的交流。’",
+        "options": [
+            { "text": "在国外", "isCorrect": true },
+            { "text": "在国外旅行", "isCorrect": false },
+            { "text": "海外", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "艺术家",
-      "npcDialog": "我在这里，是为了记录下这个世界的美好。每一个细节，每一个瞬间，都是我创作的灵感来源。",
-      "npcAvatar": "/avatars/artist.png",
-      "backgroundVideo": "/videos/artist-dialogue.mp4",
-      "options": [
-        {
-          "text": "您的作品一定很美，我愿意欣赏。",
-          "nextScene": 25
-        },
-        {
-          "text": "我也想尝试绘画，您能教我吗？",
-          "nextScene": 26
-        }
-      ]
+        "word": "absence",
+        "dialog": "在一个寂静的夜晚，唐躺在床上，却怎么也睡不着。他坐起身，走到窗边，望着外面漆黑的夜空，轻声对托尼说：‘有时候，我觉得自己的absence比存在更让人难以忍受，我害怕我无法表达出我内心所有的情感。’托尼坐在床边，轻轻握住他的手，‘你的音乐已经表达了一切，你的存在本身就是一种力量。’",
+        "options": [
+            { "text": "缺席", "isCorrect": true },
+            { "text": "不存在", "isCorrect": false },
+            { "text": "不在场", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "农夫",
-      "npcDialog": "因为我相信，即使在最糟糕的时刻，也会有美好的事物发生。",
-      "npcAvatar": "/avatars/farmer.png",
-      "backgroundVideo": "/videos/farmer-dialogue.mp4",
-      "options": [
-        {
-          "text": "您的乐观精神很令人敬佩。",
-          "nextScene": 27
-        },
-        {
-          "text": "我希望能像您一样，在任何情况下都能保持乐观。",
-          "nextScene": 28
-        }
-      ]
+        "word": "absent",
+        "dialog": "在一次重要的演出前，唐突然感到一阵剧烈的头痛，他不得不退出了排练。托尼焦急地在医院外等待着，直到唐的身影出现在门口。‘你怎么了？’托尼的声音充满了担忧。唐疲惫地笑了笑，‘我只是需要一点时间，让自己从这种absent的状态中恢复过来。’",
+        "options": [
+            { "text": "缺席的", "isCorrect": true },
+            { "text": "不在的", "isCorrect": false },
+            { "text": "缺席的", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "大臣",
-      "npcDialog": "恭喜你们完成了任务，庆典一定会非常成功。",
-      "npcAvatar": "/avatars/king.png",
-      "backgroundVideo": "/videos/king-celebration-announcement.mp4",
-      "options": [
-        {
-          "text": "陛下，这是我从国外带回来的礼物。",
-          "nextScene": 29
-        },
-        {
-          "text": "陛下，这是我在森林中找到的神奇草药。",
-          "nextScene": 30
-        }
-      ]
+        "word": "absolute",
+        "dialog": "在一次激烈的争吵后，唐感到异常疲惫，他看着托尼，眼中充满了疲惫和无奈。‘我需要你的absolute支持，托尼，我感到自己快要被这压力压垮了。’托尼紧紧地抱住他，‘我会一直在这里，我的朋友，我会给你最坚强的支持。’",
+        "options": [
+            { "text": "绝对的", "isCorrect": true },
+            { "text": "完全的", "isCorrect": true },
+            { "text": "纯粹的", "isCorrect": false }
+        ]
     },
     {
-      "npcName": "向导",
-      "npcDialog": "恭喜你完成了所有探索！现在，你准备好开始新的冒险了吗？",
-      "npcAvatar": "/avatars/guide.png",
-      "backgroundVideo": "/videos/ending-scene.mp4",
-      "options": [
-        {
-          "text": "是的，我准备好了！",
-          "nextScene": 0
-        },
-        {
-          "text": "我想休息一下，再决定。",
-          "nextScene": 0
-        }
-      ]
+        "word": "absolutely",
+        "dialog": "当他们在一家餐厅再次遭遇歧视时，托尼的怒火几乎要爆发。但唐却紧紧地拉住了他的手臂，‘absolutely不能这么做，托尼，我们要保持冷静，用理智去面对这一切。’托尼深吸了一口气，他的眼神中充满了决心。",
+        "options": [
+            { "text": "绝对地", "isCorrect": true },
+            { "text": "完全地", "isCorrect": true },
+            { "text": "完全不能", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absorb",
+        "dialog": "在一个宁静的夜晚，唐坐在钢琴前，手指轻轻敲击着琴键，音乐在空气中回荡。托尼静静地坐在一旁，他的眼神被音乐所吸引，‘你的音乐总是能让人absorb所有的烦恼，它们就像是一剂心灵的良药。’唐微笑着，眼中闪烁着感激。",
+        "options": [
+            { "text": "吸收", "isCorrect": true },
+            { "text": "吸引", "isCorrect": false },
+            { "text": "溶解", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abstract",
+        "dialog": "在参观一座艺术馆时，唐被一幅抽象画作深深吸引，他站在画前，沉思良久。‘托尼，你看这幅画，它虽然abstract，但却能让人感受到一种深层的情感，一种无法用言语表达的美丽。’托尼望着画作，心中涌起一股共鸣。",
+        "options": [
+            { "text": "抽象的", "isCorrect": true },
+            { "text": "不具体的", "isCorrect": false },
+            { "text": "无形的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abundant",
+        "dialog": "随着巡演的进行，唐和托尼之间的友谊越来越深厚。在一个夜晚，唐看着窗外的星空，感慨地说：‘托尼，这次旅程让我感受到了生活中abundant的美好，你的陪伴让我感到无比幸福。’托尼紧紧地握住他的手，眼中充满了温暖。",
+        "options": [
+            { "text": "丰富的", "isCorrect": true },
+            { "text": "充裕的", "isCorrect": true },
+            { "text": "过剩的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abuse",
+        "dialog": "在一个小镇上，他们目睹了一场对黑人的abuse，唐的心情变得沉重，他紧握双拳，眼中充满了愤怒。‘这种事情必须改变，托尼，我们不能坐视不管。’托尼坚定地站在他身边，‘是的，我们会尽我们所能去改变它，为了正义，为了平等。’",
+        "options": [
+            { "text": "滥用", "isCorrect": true },
+            { "text": "虐待", "isCorrect": true },
+            { "text": "侮辱", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "academic",
+        "dialog": "在一所大学里，唐受邀进行了一场academic讲座，他站在讲台上，目光坚定地扫过台下的学生们。‘音乐不仅仅是艺术，它也是一门深奥的学问，它能够启迪智慧，激发情感。’托尼在一旁静静地听着，心中对唐的敬意油然而生。",
+        "options": [
+            { "text": "学术的", "isCorrect": true },
+            { "text": "学校的", "isCorrect": false },
+            { "text": "学者的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "academy",
+        "dialog": "巡演结束后，唐决定成立一个音乐academy，他站在破旧的钢琴前，眼中闪烁着希望的光芒。‘托尼，我想建立一个音乐academy，让更多的孩子有机会学习音乐，用音乐改变他们的生活。’托尼紧紧地握住他的手，‘这是一个伟大的计划，我会全力支持你。’",
+        "options": [
+            { "text": "学院", "isCorrect": true },
+            { "text": "学术", "isCorrect": false },
+            { "text": "学术团体", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "accelerate",
+        "dialog": "在回程的路上，唐看着窗外的风景，心中充满了对未来的憧憬。‘托尼，这次旅程让我们都成长了很多，我希望我们的努力能accelerate社会的进步，让世界变得更加美好。’托尼看着他，眼中充满了信心和期待。",
+        "options": [
+            { "text": "加速", "isCorrect": true },
+            { "text": "促进", "isCorrect": true },
+            { "text": "加快", "isCorrect": true }
+        ]
     }
-  ]
+]
+```
+[
+    {
+        "word": "aboard",
+        "dialog": "1962年的一个清晨，朝阳透过车窗洒在托尼那刚毅的脸上，他启动了那辆闪亮的轿车，车窗缓缓降下，唐·雪利紧紧地握住了行李箱的把手。‘准备好了吗，托尼？’唐的声音带着一丝紧张和期待。托尼回头给了他一个坚定的笑容，‘是的，我的朋友，让我们aboard，向着未知的旅程出发吧。’",
+        "options": [
+            { "text": "入口", "isCorrect": false },
+            { "text": "上车", "isCorrect": true },
+            { "text": "登机", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "about",
+        "dialog": "车子缓缓驶出纽约的喧嚣，唐望着窗外不断后退的城市，他的眼神中充满了对未来的憧憬。‘托尼，你知道的，这次巡演对于我们来说意义重大。’唐的声音低沉而有力。托尼点了点头，‘我明白，关于这个计划，你打算怎么跟我解释？’唐的眼神中闪过一丝坚定，‘我要让这个世界听到我们的声音，about平等和尊重。’",
+        "options": [
+            { "text": "关于", "isCorrect": true },
+            { "text": "附近", "isCorrect": false },
+            { "text": "关于...而", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "above",
+        "dialog": "夜幕降临，他们在一家小旅馆前停下。唐站在窗前，仰望着满天繁星，他的眼神中充满了对生活的热爱和对梦想的追求。‘托尼，你看，这些星星，它们似乎在告诉我们，无论遇到什么困难，我们都要above一切，坚持自己的信念。’托尼默默地站在他身边，心中涌起一股暖流。",
+        "options": [
+            { "text": "以上", "isCorrect": true },
+            { "text": "之上", "isCorrect": true },
+            { "text": "在...之上", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abroad",
+        "dialog": "在一座小镇的演出结束后，他们在一家小餐馆用餐。唐望着窗外的夜色，缓缓开口：‘托尼，我曾在欧洲abroad演出，那里的观众对音乐有着深深的热爱，他们让我看到了音乐的力量。’托尼的眼神中闪烁着好奇，‘那和我们这里有什么不同呢？’唐沉思片刻，‘那里的音乐是一种更加纯粹的表达，一种超越语言和文化的交流。’",
+        "options": [
+            { "text": "在国外", "isCorrect": true },
+            { "text": "在国外旅行", "isCorrect": false },
+            { "text": "海外", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absence",
+        "dialog": "在一个寂静的夜晚，唐躺在床上，却怎么也睡不着。他坐起身，走到窗边，望着外面漆黑的夜空，轻声对托尼说：‘有时候，我觉得自己的absence比存在更让人难以忍受，我害怕我无法表达出我内心所有的情感。’托尼坐在床边，轻轻握住他的手，‘你的音乐已经表达了一切，你的存在本身就是一种力量。’",
+        "options": [
+            { "text": "缺席", "isCorrect": true },
+            { "text": "不存在", "isCorrect": false },
+            { "text": "不在场", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absent",
+        "dialog": "在一次重要的演出前，唐突然感到一阵剧烈的头痛，他不得不退出了排练。托尼焦急地在医院外等待着，直到唐的身影出现在门口。‘你怎么了？’托尼的声音充满了担忧。唐疲惫地笑了笑，‘我只是需要一点时间，让自己从这种absent的状态中恢复过来。’",
+        "options": [
+            { "text": "缺席的", "isCorrect": true },
+            { "text": "不在的", "isCorrect": false },
+            { "text": "缺席的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absolute",
+        "dialog": "在一次激烈的争吵后，唐感到异常疲惫，他看着托尼，眼中充满了疲惫和无奈。‘我需要你的absolute支持，托尼，我感到自己快要被这压力压垮了。’托尼紧紧地抱住他，‘我会一直在这里，我的朋友，我会给你最坚强的支持。’",
+        "options": [
+            { "text": "绝对的", "isCorrect": true },
+            { "text": "完全的", "isCorrect": true },
+            { "text": "纯粹的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absolutely",
+        "dialog": "当他们在一家餐厅再次遭遇歧视时，托尼的怒火几乎要爆发。但唐却紧紧地拉住了他的手臂，‘absolutely不能这么做，托尼，我们要保持冷静，用理智去面对这一切。’托尼深吸了一口气，他的眼神中充满了决心。",
+        "options": [
+            { "text": "绝对地", "isCorrect": true },
+            { "text": "完全地", "isCorrect": true },
+            { "text": "完全不能", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "absorb",
+        "dialog": "在一个宁静的夜晚，唐坐在钢琴前，手指轻轻敲击着琴键，音乐在空气中回荡。托尼静静地坐在一旁，他的眼神被音乐所吸引，‘你的音乐总是能让人absorb所有的烦恼，它们就像是一剂心灵的良药。’唐微笑着，眼中闪烁着感激。",
+        "options": [
+            { "text": "吸收", "isCorrect": true },
+            { "text": "吸引", "isCorrect": false },
+            { "text": "溶解", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abstract",
+        "dialog": "在参观一座艺术馆时，唐被一幅抽象画作深深吸引，他站在画前，沉思良久。‘托尼，你看这幅画，它虽然abstract，但却能让人感受到一种深层的情感，一种无法用言语表达的美丽。’托尼望着画作，心中涌起一股共鸣。",
+        "options": [
+            { "text": "抽象的", "isCorrect": true },
+            { "text": "不具体的", "isCorrect": false },
+            { "text": "无形的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abundant",
+        "dialog": "随着巡演的进行，唐和托尼之间的友谊越来越深厚。在一个夜晚，唐看着窗外的星空，感慨地说：‘托尼，这次旅程让我感受到了生活中abundant的美好，你的陪伴让我感到无比幸福。’托尼紧紧地握住他的手，眼中充满了温暖。",
+        "options": [
+            { "text": "丰富的", "isCorrect": true },
+            { "text": "充裕的", "isCorrect": true },
+            { "text": "过剩的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "abuse",
+        "dialog": "在一个小镇上，他们目睹了一场对黑人的abuse，唐的心情变得沉重，他紧握双拳，眼中充满了愤怒。‘这种事情必须改变，托尼，我们不能坐视不管。’托尼坚定地站在他身边，‘是的，我们会尽我们所能去改变它，为了正义，为了平等。’",
+        "options": [
+            { "text": "滥用", "isCorrect": true },
+            { "text": "虐待", "isCorrect": true },
+            { "text": "侮辱", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "academic",
+        "dialog": "在一所大学里，唐受邀进行了一场academic讲座，他站在讲台上，目光坚定地扫过台下的学生们。‘音乐不仅仅是艺术，它也是一门深奥的学问，它能够启迪智慧，激发情感。’托尼在一旁静静地听着，心中对唐的敬意油然而生。",
+        "options": [
+            { "text": "学术的", "isCorrect": true },
+            { "text": "学校的", "isCorrect": false },
+            { "text": "学者的", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "academy",
+        "dialog": "巡演结束后，唐决定成立一个音乐academy，他站在破旧的钢琴前，眼中闪烁着希望的光芒。‘托尼，我想建立一个音乐academy，让更多的孩子有机会学习音乐，用音乐改变他们的生活。’托尼紧紧地握住他的手，‘这是一个伟大的计划，我会全力支持你。’",
+        "options": [
+            { "text": "学院", "isCorrect": true },
+            { "text": "学术", "isCorrect": false },
+            { "text": "学术团体", "isCorrect": false }
+        ]
+    },
+    {
+        "word": "accelerate",
+        "dialog": "在回程的路上，唐看着窗外的风景，心中充满了对未来的憧憬。‘托尼，这次旅程让我们都成长了很多，我希望我们的努力能accelerate社会的进步，让世界变得更加美好。’托尼看着他，眼中充满了信心和期待。",
+        "options": [
+            { "text": "加速", "isCorrect": true },
+            { "text": "促进", "isCorrect": true },
+            { "text": "加快", "isCorrect": true }
+        ]
+    }
+]
