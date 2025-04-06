@@ -168,9 +168,9 @@ def chat_qwen():
     try:
         # 从请求中获取消息历史
         messages = request.json.get('messages', [])
-        
+        model = request.json.get('model')
         # 调用千问API获取回复
-        response_content = get_qwen_response(messages)
+        response_content = get_qwen_response(messages, model)
         
         # 返回API响应
         return jsonify({

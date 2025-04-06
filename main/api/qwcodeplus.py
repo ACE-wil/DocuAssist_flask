@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 
-def get_qwen_response(messages):
+def get_qwen_response(messages,models):
     """
     调用千问API获取回复
     
@@ -18,7 +18,7 @@ def get_qwen_response(messages):
     
     completion = client.chat.completions.create(
         # model="qwen2.5-coder-32b-instruct",
-        model="qwen-coder-plus-latest",
+        model=models,
         messages=messages
     )
     
