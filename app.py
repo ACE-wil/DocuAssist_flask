@@ -27,6 +27,7 @@ from celery import Celery
 from main.api.generate_scene import generate_scene
 from concurrent.futures import ThreadPoolExecutor
 from main.api.getWordsArr import get_words_arr
+from main.api.qwcodeplus import get_qwen_response
 from flask_jwt_extended import JWTManager, create_access_token
 
 
@@ -161,6 +162,29 @@ def chat():
 
     # 返回生成的对话
     return jsonify({'response': response.choices[0].message.content}), 200
+
+@app.route('/api/chat-qwen', methods=['POST'])
+def chat_qwen():
+    try:
+        # 从请求中获取消息历史
+        messages = request.json.get('messages', [])
+        
+        # 调用千问API获取回复
+        response_content = get_qwen_response(messages)
+        
+        # 返回API响应
+        return jsonify({
+            'status': 'success',
+            'response': response_content
+        })
+    except Exception as e:
+        print(f"千问API调用错误: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'message': f'调用千问API时出错: {str(e)}'
+        }), 500
+
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -482,6 +506,7 @@ class Applications(db.Model):
     used_models = db.Column(db.String(255))
     prize = db.Column(db.String(100))
     appId = db.Column(db.String(100))
+    type = db.Column(db.Text)
 
 class UserGame(db.Model):
     __tablename__ = 'user_game'  # 显式指定表名
@@ -680,7 +705,8 @@ def get_apps():
                 'used_models': app.used_models,
                 'prize': app.prize,
                 'created_at': app.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'updated_at': app.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+                'updated_at': app.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'type': app.type
             }
             for app in applications
         ]
