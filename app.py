@@ -425,6 +425,50 @@ def api_login():
         'message': '用户名或密码错误'
     }), 401
 
+@app.route('/api/register', methods=['POST'])
+def api_register():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    # 验证用户名和密码
+    if not username or not password:
+        return jsonify({
+            'status': 'error',
+            'message': '用户名和密码不能为空'
+        }), 400
+    
+    # 检查用户名是否已存在
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({
+            'status': 'error',
+            'message': '用户名已存在'
+        }), 409
+    
+    # 创建新用户
+    hashed_password = generate_password_hash(password)
+    new_user = User(username=username, password=hashed_password)
+    
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        
+        return jsonify({
+            'status': 'success',
+            'message': '注册成功',
+            'user': {
+                'id': new_user.id,
+                'username': new_user.username
+            }
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'status': 'error',
+            'message': f'注册失败: {str(e)}'
+        }), 500
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -531,6 +575,13 @@ def create_app():
         creator_name = request.form.get('creator_name')
         game_type = request.form.get('game_type')
         story_type = request.form.get('story_type')
+        user_id = request.form.get('user_id')  # 从请求中获取 userId
+
+        if not user_id:
+            return jsonify({
+                'status': 'error',
+                'message': '用户ID不能为空'
+            }), 400
 
         # 打印数据库路径
         db_path = os.path.abspath(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', ''))
@@ -591,7 +642,7 @@ def create_app():
             print(f"文档文件已上传到七牛云: {doc_file_path}")
             # 使用 SQLAlchemy ORM
             new_app = UserGame(
-                userId=12619,
+                userId=user_id,  # 使用动态获取的 userId
                 app_name=app_name,
                 app_description=app_description,
                 creator_name=creator_name,
@@ -660,7 +711,17 @@ def create_app():
 @app.route('/api/get-my-apps', methods=['GET'])
 def get_my_apps():
     try:
-        myApps = UserGame.query.filter_by(userId=12619).all()
+        # 从请求参数中获取 userId
+        user_id = request.args.get('user_id')
+        
+        # 如果没有userId，只查询系统默认应用
+        if not user_id:
+            myApps = UserGame.query.filter_by(userId=12619).all()
+        else:
+            # 如果有userId，查询用户自己的和系统默认的应用
+            myApps = UserGame.query.filter(
+                UserGame.userId.in_([user_id, 12619])
+            ).all()
 
         myApps_data = [
             {
